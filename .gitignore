@@ -1,0 +1,19 @@
+# Environment and secrets
+.env
+*.env
+
+# Google ADK local state
+.adk/
+**/.adk/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Backups and temporary files
+backups/
+*.backup
+*.backup2
+
+# Logs
+*.log
