@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FM Genie | Facilities Management</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+    }
+
+    .header {
+      height: 72px;
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: #172033;
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+    }
+
+    .status {
+      font-size: 13px;
+      color: #16803c;
+      background: #ecfdf3;
+      padding: 8px 14px;
+      border-radius: 20px;
+    }
+
+    .layout {
+      display: flex;
+      min-height: calc(100vh - 72px);
+    }
+
+    .sidebar {
+      width: 230px;
+      background: #172033;
+      color: white;
+      padding: 24px 14px;
+    }
+
+    .nav {
+      padding: 13px 14px;
+      border-radius: 9px;
+      margin-bottom: 6px;
+      cursor: pointer;
+      color: #cbd5e1;
+    }
+
+    .nav.active,
+    .nav:hover {
+      background: #27344d;
+      color: white;
+    }
+
+    .main {
+      flex: 1;
+      padding: 38px;
+      max-width: 1200px;
+    }
+
+    .welcome h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+    }
+
+    .welcome p {
+      margin: 0 0 30px;
+      color: #64748b;
+    }
+
+    .request-card {
+      background: white;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 4px 20px rgba(15,23,42,.06);
+      border: 1px solid #e8ebf0;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 130px;
+      resize: vertical;
+      border: 1px solid #d7dce5;
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: #64748b;
+    }
+
+    .actions {
+      margin-top: 16px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    button {
+      border: 0;
+      border-radius: 9px;
+      padding: 12px 22px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #172033;
+      color: white;
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: wait;
+    }
+
+    .result {
+      display: none;
+      margin-top: 24px;
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .ticket-id {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .item {
+      background: white;
+      padding: 14px;
+      border-radius: 9px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .label {
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 5px;
+    }
+
+    .value {
+      font-weight: 600;
+    }
+
+    .recent {
+      margin-top: 28px;
+    }
+
+    .recent h2 {
+      font-size: 19px;
+    }
+
+    .hint {
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .error {
+      color: #b91c1c;
+      background: #fef2f2;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 15px;
+      display: none;
+    }
+
+    @media(max-width: 800px) {
+      .sidebar { display: none; }
+      .main { padding: 20px; }
+      .grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="brand">
+    <div class="logo">FM</div>
+    <span>FM Genie</span>
+  </div>
+  <div class="status">● System Operational</div>
+</header>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="nav active">🏠 Home</div>
+    <div class="nav">🎫 My Tickets</div>
+    <div class="nav">🔔 Notifications</div>
+    <div class="nav">📊 Admin Dashboard</div>
+  </aside>
+
+  <main class="main">
+
+    <section class="welcome">
+      <h1>How can we help?</h1>
+      <p>Describe your facilities issue in your own words. FM Genie will take care of the rest.</p>
+    </section>
+
+    <section class="request-card">
+
+      <textarea id="issue"
+        placeholder="Example: The air conditioner is not cooling in Meeting Room B on the 3rd floor."></textarea>
+
+      <div class="actions">
+        <button id="submitBtn" onclick="submitIssue()">
+          Create Service Request
+        </button>
+      </div>
+
+      <div id="error" class="error"></div>
+
+      <div id="result" class="result">
+        <div class="ticket-id" id="ticketId"></div>
+
+        <div class="grid">
+          <div class="item">
+            <div class="label">Status</div>
+            <div class="value" id="status"></div>
+          </div>
+
+          <div class="item">
+            <div class="label">Category</div>
+            <div class="value" id="category"></div>
+          </div>
+
+          <div class="item">
+            <div class="label">Priority</div>
+            <div class="value" id="priority"></div>
+          </div>
+
+          <div class="item">
+            <div class="label">SLA</div>
+            <div class="value" id="sla"></div>
+          </div>
+
+          <div class="item">
+            <div class="label">Location</div>
+            <div class="value" id="location"></div>
+          </div>
+
+          <div class="item">
+            <div class="label">Responsible Team</div>
+            <div class="value" id="team"></div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="recent">
+      <h2>FM Genie</h2>
+      <p class="hint">
+        AI-powered facilities management — ticket creation, SLA monitoring,
+        notifications and escalation.
+      </p>
+    </section>
+
+  </main>
+</div>
+
+<script>
+
+const API_BASE = "";
+
+const APP_NAME = "fm_genie";
+const USER_ID = "demo";
+
+let sessionId = null;
+
+async function createSession() {
+
+  const response = await fetch(
+    `${API_BASE}/api/apps/${APP_NAME}/users/${USER_ID}/sessions`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: "{}"
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Unable to create FM Genie session.");
+  }
+
+  const data = await response.json();
+  sessionId = data.id;
+}
+
+async function submitIssue() {
+
+  const issue = document.getElementById("issue").value.trim();
+  const button = document.getElementById("submitBtn");
+  const result = document.getElementById("result");
+  const error = document.getElementById("error");
+
+  if (!issue) {
+    error.textContent = "Please describe the issue first.";
+    error.style.display = "block";
+    return;
+  }
+
+  error.style.display = "none";
+  result.classList.remove("show");
+
+  button.disabled = true;
+  button.textContent = "FM Genie is processing...";
+
+  try {
+
+    if (!sessionId) {
+      await createSession();
+    }
+
+    const response = await fetch(
+      `${API_BASE}/api/run`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          appName: APP_NAME,
+          userId: USER_ID,
+          sessionId: sessionId,
+          newMessage: {
+            role: "user",
+            parts: [
+              {
+                text: issue
+              }
+            ]
+          }
+        })
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("FM Genie could not process the request.");
+    }
+
+    const events = await response.json();
+
+    displayResponse(events);
+
+  } catch (err) {
+
+    error.textContent = err.message;
+    error.style.display = "block";
+
+  } finally {
+
+    button.disabled = false;
+    button.textContent = "Create Service Request";
+
+  }
+}
+
+function displayResponse(events) {
+
+  let ticket = null;
+
+  for (const event of events) {
+
+    const parts = event.content?.parts || [];
+
+    for (const part of parts) {
+
+      if (
+        part.functionResponse &&
+        part.functionResponse.name === "create_ticket"
+      ) {
+        ticket = part.functionResponse.response;
+      }
+
+    }
+  }
+
+  if (!ticket || !ticket.success) {
+
+    document.getElementById("error").textContent =
+      "The agent responded, but no ticket information was returned.";
+
+    document.getElementById("error").style.display = "block";
+
+    return;
+  }
+
+  document.getElementById("ticketId").textContent =
+    "Ticket " + ticket.ticket_id;
+
+  document.getElementById("status").textContent =
+    ticket.status || "-";
+
+  document.getElementById("category").textContent =
+    ticket.category || "-";
+
+  document.getElementById("priority").textContent =
+    ticket.priority || "-";
+
+  document.getElementById("sla").textContent =
+    ticket.sla || "-";
+
+  document.getElementById("location").textContent =
+    ticket.location || "-";
+
+  document.getElementById("team").textContent =
+    ticket.responsible_team || "Pending Assignment";
+
+  document.getElementById("result").classList.add("show");
+}
+
+</script>
+
+</body>
+</html>
+EOF
