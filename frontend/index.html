@@ -1,458 +1,6498 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FM Genie | Facilities Management</title>
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+
+>
+
+  <title>FM Genie | Intelligent Facilities Management</title>
+
   <style>
-    * { box-sizing: border-box; }
+
+    /* =========================================================
+       GLOBAL
+       ========================================================= */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+
+      --navy: #172033;
+      --navy-2: #27344d;
+      --navy-3: #334155;
+
+      --blue: #2563eb;
+      --blue-dark: #1d4ed8;
+      --blue-light: #eff6ff;
+
+      --green: #16803c;
+      --green-light: #ecfdf3;
+
+      --orange: #b45309;
+      --orange-light: #fffbeb;
+
+      --red: #b91c1c;
+      --red-light: #fef2f2;
+
+      --text: #172033;
+      --text-secondary: #475569;
+      --muted: #64748b;
+
+      --border: #e5e7eb;
+      --border-dark: #d7dce5;
+
+      --background: #f5f7fb;
+      --white: #ffffff;
+
+    }
+
+
+    html {
+      scroll-behavior: smooth;
+    }
+
 
     body {
+
       margin: 0;
-      font-family: Inter, Arial, sans-serif;
-      background: #f5f7fb;
-      color: #172033;
+
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      background: var(--background);
+
+      color: var(--text);
+
+      -webkit-font-smoothing: antialiased;
+
     }
 
-    .header {
-      height: 72px;
-      background: white;
-      border-bottom: 1px solid #e5e7eb;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 32px;
-    }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 22px;
-      font-weight: 700;
-    }
-
-    .logo {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
-      background: #172033;
-      color: white;
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-    }
-
-    .status {
-      font-size: 13px;
-      color: #16803c;
-      background: #ecfdf3;
-      padding: 8px 14px;
-      border-radius: 20px;
-    }
-
-    .layout {
-      display: flex;
-      min-height: calc(100vh - 72px);
-    }
-
-    .sidebar {
-      width: 230px;
-      background: #172033;
-      color: white;
-      padding: 24px 14px;
-    }
-
-    .nav {
-      padding: 13px 14px;
-      border-radius: 9px;
-      margin-bottom: 6px;
-      cursor: pointer;
-      color: #cbd5e1;
-    }
-
-    .nav.active,
-    .nav:hover {
-      background: #27344d;
-      color: white;
-    }
-
-    .main {
-      flex: 1;
-      padding: 38px;
-      max-width: 1200px;
-    }
-
-    .welcome h1 {
-      margin: 0 0 8px;
-      font-size: 30px;
-    }
-
-    .welcome p {
-      margin: 0 0 30px;
-      color: #64748b;
-    }
-
-    .request-card {
-      background: white;
-      border-radius: 16px;
-      padding: 28px;
-      box-shadow: 0 4px 20px rgba(15,23,42,.06);
-      border: 1px solid #e8ebf0;
-    }
-
+    button,
     textarea {
-      width: 100%;
-      min-height: 130px;
-      resize: vertical;
-      border: 1px solid #d7dce5;
-      border-radius: 12px;
-      padding: 16px;
-      font-size: 16px;
-      outline: none;
+      font-family: inherit;
     }
 
-    textarea:focus {
-      border-color: #64748b;
-    }
-
-    .actions {
-      margin-top: 16px;
-      display: flex;
-      justify-content: flex-end;
-    }
 
     button {
-      border: 0;
-      border-radius: 9px;
-      padding: 12px 22px;
-      font-size: 15px;
-      font-weight: 600;
       cursor: pointer;
-      background: #172033;
+    }
+
+
+    /* =========================================================
+       HEADER
+       ========================================================= */
+
+    .header {
+
+      height: 72px;
+
+      background: var(--white);
+
+      border-bottom:
+        1px solid var(--border);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding: 0 30px;
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 50;
+
+    }
+
+
+    .brand {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+      font-size: 21px;
+
+      font-weight: 750;
+
+      letter-spacing: -.3px;
+
+    }
+
+
+    .logo {
+
+      width: 40px;
+
+      height: 40px;
+
+      border-radius: 11px;
+
+      background: var(--navy);
+
       color: white;
+
+      display: grid;
+
+      place-items: center;
+
+      font-size: 13px;
+
+      font-weight: 800;
+
+      box-shadow:
+        0 4px 12px rgba(23, 32, 51, .15);
+
     }
 
-    button:disabled {
-      opacity: .5;
-      cursor: wait;
+
+    .header-right {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 13px;
+
     }
 
-    .result {
-      display: none;
-      margin-top: 24px;
+
+    .status {
+
+      font-size: 12px;
+
+      color: var(--green);
+
+      background: var(--green-light);
+
+      padding: 8px 13px;
+
+      border-radius: 20px;
+
+      font-weight: 650;
+
+      border: 1px solid #d1fae5;
+
+    }
+
+
+    /* =========================================================
+       GLOBAL NOTIFICATION BELL
+       ========================================================= */
+
+    .notification-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .notification-bell {
+      position: relative;
+      width: 38px;
+      height: 38px;
+      border: 0;
+      border-radius: 50%;
       background: #f8fafc;
-      border-radius: 12px;
-      padding: 20px;
-      border: 1px solid #e2e8f0;
+      color: var(--navy);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      font-size: 17px;
+      transition: all .15s ease;
     }
 
-    .result.show {
+    .notification-bell:hover {
+      background: #e2e8f0;
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -3px;
+      right: -2px;
+      min-width: 15px;
+      height: 15px;
+      padding: 0 4px;
+      border-radius: 999px;
+      background: #dc2626;
+      color: white;
+      font-size: 8px;
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+      border: 2px solid white;
+    }
+
+    .notification-badge.hidden {
+      display: none;
+    }
+
+    .notification-popover {
+      position: absolute;
+      top: 47px;
+      right: 0;
+      width: 330px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 12px 35px rgba(15, 23, 42, .16);
+      z-index: 1000;
+      display: none;
+      overflow: hidden;
+    }
+
+    .notification-popover.open {
       display: block;
     }
 
-    .ticket-id {
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 15px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
-    .item {
-      background: white;
-      padding: 14px;
-      border-radius: 9px;
-      border: 1px solid #e5e7eb;
-    }
-
-    .label {
+    .notification-popover-header {
+      padding: 13px 15px;
+      border-bottom: 1px solid var(--border);
       font-size: 12px;
-      color: #64748b;
-      margin-bottom: 5px;
+      font-weight: 800;
+      color: var(--text);
     }
 
-    .value {
-      font-weight: 600;
+    .notification-popover-body {
+      padding: 14px 15px;
     }
+
+    .notification-popover-type {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--blue);
+      margin-bottom: 6px;
+    }
+
+    .notification-popover-ticket {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .notification-popover-message {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .notification-popover-meta {
+      margin-top: 10px;
+      padding-top: 9px;
+      border-top: 1px solid var(--border);
+      font-size: 9px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .notification-popover-status {
+      display: inline-block;
+      margin-top: 7px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 8px;
+      font-weight: 800;
+    }
+
+    .notification-popover-empty {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    @media(max-width: 600px) {
+      .notification-popover {
+        right: -45px;
+        width: min(330px, calc(100vw - 30px));
+      }
+    }
+
+
+    .profile {
+
+      width: 38px;
+
+      height: 38px;
+
+      border-radius: 50%;
+
+      background: #e2e8f0;
+
+      color: var(--navy);
+
+      display: grid;
+
+      place-items: center;
+
+      font-size: 13px;
+
+      font-weight: 750;
+
+    }
+
+
+    /* =========================================================
+       LAYOUT
+       ========================================================= */
+
+    .layout {
+
+      display: flex;
+
+      min-height:
+        calc(100vh - 72px);
+
+    }
+
+
+    /* =========================================================
+       SIDEBAR
+       ========================================================= */
+
+    .sidebar {
+
+      width: 230px;
+
+      flex-shrink: 0;
+
+      background: var(--navy);
+
+      color: white;
+
+      padding: 25px 14px;
+
+      display: flex;
+
+      flex-direction: column;
+
+    }
+
+
+    .sidebar-title {
+
+      color: #94a3b8;
+
+      font-size: 10px;
+
+      font-weight: 750;
+
+      text-transform: uppercase;
+
+      letter-spacing: 1.2px;
+
+      padding:
+        0 14px;
+
+      margin-bottom: 12px;
+
+    }
+
+
+    .nav {
+
+      padding: 12px 14px;
+
+      border-radius: 9px;
+
+      margin-bottom: 6px;
+
+      color: #cbd5e1;
+
+      font-size: 14px;
+
+      transition:
+        background .2s ease,
+        color .2s ease,
+        transform .2s ease;
+
+    }
+
+
+    .nav:hover {
+
+      background: var(--navy-2);
+
+      color: white;
+
+      transform: translateX(2px);
+
+    }
+
+
+    .nav.active {
+
+      background: var(--navy-2);
+
+      color: white;
+
+    }
+
+
+    .sidebar-footer {
+
+      margin-top: auto;
+
+      padding: 15px;
+
+      border-radius: 12px;
+
+      background:
+        rgba(255,255,255,.055);
+
+      border:
+        1px solid rgba(255,255,255,.06);
+
+      color: #94a3b8;
+
+      font-size: 11px;
+
+      line-height: 1.55;
+
+    }
+
+
+    .sidebar-footer strong {
+
+      display: block;
+
+      color: white;
+
+      font-size: 12px;
+
+      margin-bottom: 4px;
+
+    }
+
+
+    /* =========================================================
+       MAIN
+       ========================================================= */
+
+    .main {
+
+      flex: 1;
+
+      width: 100%;
+
+      max-width: 1280px;
+
+      margin: 0 auto;
+
+      padding: 32px;
+
+    }
+
+
+    /* =========================================================
+       WELCOME
+       ========================================================= */
+
+    .welcome {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: flex-end;
+
+      margin-bottom: 23px;
+
+    }
+
+
+    .welcome h1 {
+
+      margin: 0 0 6px;
+
+      font-size: 29px;
+
+      line-height: 1.2;
+
+      letter-spacing: -.7px;
+
+    }
+
+
+    .welcome p {
+
+      margin: 0;
+
+      color: var(--muted);
+
+      font-size: 14px;
+
+    }
+
+
+    .date-box {
+
+      text-align: right;
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+    }
+
+
+    /* =========================================================
+       KPI CARDS
+       ========================================================= */
+
+    .stats {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 13px;
+
+      margin-bottom: 23px;
+
+    }
+
+
+    .stat-card {
+
+      background: white;
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 14px;
+
+      padding: 17px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      box-shadow:
+        0 2px 9px rgba(15,23,42,.025);
+
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+
+    }
+
+
+    .stat-card:hover {
+
+      transform:
+        translateY(-2px);
+
+      box-shadow:
+        0 8px 22px rgba(15,23,42,.07);
+
+    }
+
+
+    .stat-label {
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+      margin-bottom: 6px;
+
+    }
+
+
+    .stat-value {
+
+      font-size: 25px;
+
+      font-weight: 750;
+
+      letter-spacing: -.4px;
+
+    }
+
+
+    .stat-icon {
+
+      width: 40px;
+
+      height: 40px;
+
+      border-radius: 11px;
+
+      background: #f1f5f9;
+
+      display: grid;
+
+      place-items: center;
+
+      font-size: 17px;
+
+    }
+
+
+    /* =========================================================
+       HERO
+       ========================================================= */
+
+    .hero {
+
+      position: relative;
+
+      overflow: hidden;
+
+      background:
+        linear-gradient(
+          135deg,
+          #172033 0%,
+          #26354f 100%
+        );
+
+      border-radius: 20px;
+
+      padding: 32px;
+
+      color: white;
+
+      margin-bottom: 22px;
+
+      box-shadow:
+        0 10px 30px rgba(15,23,42,.10);
+
+    }
+
+
+    .hero::before {
+
+      content: "";
+
+      position: absolute;
+
+      width: 260px;
+
+      height: 260px;
+
+      border-radius: 50%;
+
+      border:
+        1px solid rgba(255,255,255,.06);
+
+      right: -75px;
+
+      top: -105px;
+
+    }
+
+
+    .hero::after {
+
+      content: "";
+
+      position: absolute;
+
+      width: 150px;
+
+      height: 150px;
+
+      border-radius: 50%;
+
+      border:
+        1px solid rgba(255,255,255,.045);
+
+      right: 45px;
+
+      bottom: -100px;
+
+    }
+
+
+    .hero-content {
+
+      position: relative;
+
+      z-index: 2;
+
+    }
+
+
+    .hero-tag {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 6px;
+
+      background:
+        rgba(255,255,255,.09);
+
+      border:
+        1px solid rgba(255,255,255,.10);
+
+      padding: 6px 10px;
+
+      border-radius: 20px;
+
+      font-size: 10px;
+
+      font-weight: 750;
+
+      letter-spacing: .7px;
+
+      text-transform: uppercase;
+
+      margin-bottom: 14px;
+
+    }
+
+
+    .hero h2 {
+
+      margin: 0 0 11px;
+
+      font-size: 29px;
+
+      line-height: 1.2;
+
+      letter-spacing: -.65px;
+
+      max-width: 720px;
+
+    }
+
+
+    .hero-description {
+
+      margin: 0;
+
+      max-width: 760px;
+
+      color: #cbd5e1;
+
+      font-size: 14px;
+
+      line-height: 1.65;
+
+    }
+
+
+    .capabilities {
+
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 8px;
+
+      margin-top: 21px;
+
+    }
+
+
+    .capability {
+
+      background:
+        rgba(255,255,255,.075);
+
+      border:
+        1px solid rgba(255,255,255,.08);
+
+      padding: 8px 11px;
+
+      border-radius: 9px;
+
+      font-size: 11px;
+
+      color: #e2e8f0;
+
+    }
+
+
+    /* =========================================================
+       REQUEST CARD
+       ========================================================= */
+
+    .request-card {
+
+      background: white;
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 18px;
+
+      padding: 25px;
+
+      box-shadow:
+        0 5px 22px rgba(15,23,42,.055);
+
+    }
+
+
+    .request-header {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+      margin-bottom: 17px;
+
+    }
+
+
+    .genie-icon {
+
+      width: 43px;
+
+      height: 43px;
+
+      flex-shrink: 0;
+
+      border-radius: 12px;
+
+      background: var(--blue-light);
+
+      display: grid;
+
+      place-items: center;
+
+      font-size: 19px;
+
+    }
+
+
+    .request-title {
+
+      margin: 0 0 3px;
+
+      font-size: 18px;
+
+      font-weight: 750;
+
+    }
+
+
+    .request-subtitle {
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+    }
+
+
+    /* =========================================================
+       TEXTAREA
+       ========================================================= */
+
+    textarea {
+
+      width: 100%;
+
+      min-height: 135px;
+
+      resize: vertical;
+
+      border:
+        1px solid var(--border-dark);
+
+      border-radius: 13px;
+
+      padding: 16px;
+
+      font-size: 15px;
+
+      line-height: 1.55;
+
+      color: var(--text);
+
+      outline: none;
+
+      transition:
+        border .2s ease,
+        box-shadow .2s ease;
+
+      background: white;
+
+    }
+
+
+    textarea:focus {
+
+      border-color:
+        var(--blue);
+
+      box-shadow:
+        0 0 0 3px
+        rgba(37,99,235,.08);
+
+    }
+
+
+    textarea::placeholder {
+
+      color: #94a3b8;
+
+    }
+
+
+    /* =========================================================
+       QUICK ACTIONS
+       ========================================================= */
+
+    .quick-label {
+
+      color: var(--muted);
+
+      font-size: 11px;
+
+      margin-top: 13px;
+
+      margin-bottom: 8px;
+
+    }
+
+
+    .quick-actions {
+
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 7px;
+
+    }
+
+
+    .quick-btn {
+
+      border:
+        1px solid var(--border);
+
+      background: #f8fafc;
+
+      color: var(--text-secondary);
+
+      padding: 8px 11px;
+
+      border-radius: 20px;
+
+      font-size: 11px;
+
+      transition:
+        background .2s ease,
+        border .2s ease,
+        color .2s ease,
+        transform .2s ease;
+
+    }
+
+
+    .quick-btn:hover {
+
+      background: var(--blue-light);
+
+      border-color: #bfdbfe;
+
+      color: var(--blue);
+
+      transform:
+        translateY(-1px);
+
+    }
+
+
+    /* =========================================================
+       ACTION
+       ========================================================= */
+
+    .actions {
+
+      margin-top: 17px;
+
+      display: flex;
+
+      justify-content: flex-end;
+
+    }
+
+
+    .submit {
+
+      border: 0;
+
+      border-radius: 10px;
+
+      padding: 13px 21px;
+
+      background: var(--navy);
+
+      color: white;
+
+      font-size: 13px;
+
+      font-weight: 700;
+
+      transition:
+        background .2s ease,
+        transform .2s ease,
+        box-shadow .2s ease;
+
+    }
+
+
+    .submit:hover {
+
+      background: #0f172a;
+
+      transform:
+        translateY(-1px);
+
+      box-shadow:
+        0 6px 14px rgba(15,23,42,.15);
+
+    }
+
+
+    .submit:disabled {
+
+      opacity: .55;
+
+      cursor: wait;
+
+      transform: none;
+
+      box-shadow: none;
+
+    }
+
+
+    /* =========================================================
+       PROCESSING
+       ========================================================= */
+
+    .loading {
+
+      display: none;
+
+      margin-top: 17px;
+
+      padding: 14px;
+
+      border-radius: 11px;
+
+      background: #f8fafc;
+
+      border:
+        1px solid var(--border);
+
+      color: var(--text-secondary);
+
+      font-size: 12px;
+
+      align-items: center;
+
+      gap: 10px;
+
+    }
+
+
+    .loading.show {
+
+      display: flex;
+
+    }
+
+
+    .spinner {
+
+      width: 16px;
+
+      height: 16px;
+
+      flex-shrink: 0;
+
+      border:
+        2px solid #cbd5e1;
+
+      border-top-color:
+        var(--blue);
+
+      border-radius: 50%;
+
+      animation:
+        spin .8s linear infinite;
+
+    }
+
+
+    @keyframes spin {
+
+      to {
+        transform: rotate(360deg);
+      }
+
+    }
+
+
+    /* =========================================================
+       ERROR
+       ========================================================= */
+
+    .error {
+
+      display: none;
+
+      margin-top: 15px;
+
+      padding: 12px 13px;
+
+      border-radius: 9px;
+
+      color: var(--red);
+
+      background: var(--red-light);
+
+      border:
+        1px solid #fecaca;
+
+      font-size: 12px;
+
+      line-height: 1.5;
+
+    }
+
+
+    /* =========================================================
+       RESULT
+       ========================================================= */
+
+    .result {
+
+      display: none;
+
+      margin-top: 23px;
+
+      background: #f8fafc;
+
+      border-radius: 14px;
+
+      padding: 20px;
+
+      border:
+        1px solid #dbe3ed;
+
+      animation:
+        resultIn .3s ease;
+
+    }
+
+
+    .result.show {
+
+      display: block;
+
+    }
+
+
+    @keyframes resultIn {
+
+      from {
+
+        opacity: 0;
+
+        transform:
+          translateY(5px);
+
+      }
+
+      to {
+
+        opacity: 1;
+
+        transform:
+          translateY(0);
+
+      }
+
+    }
+
+
+    /* =========================================================
+       RESULT HEADER
+       ========================================================= */
+
+    .success-header {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 11px;
+
+      margin-bottom: 17px;
+
+    }
+
+
+    .success-icon {
+
+      width: 40px;
+
+      height: 40px;
+
+      flex-shrink: 0;
+
+      border-radius: 50%;
+
+      background: var(--green-light);
+
+      color: var(--green);
+
+      display: grid;
+
+      place-items: center;
+
+      font-size: 18px;
+
+      font-weight: 800;
+
+      border:
+        1px solid #bbf7d0;
+
+    }
+
+
+    .success-title {
+
+      font-size: 17px;
+
+      font-weight: 750;
+
+    }
+
+
+    .success-message {
+
+      margin-top: 3px;
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+    }
+
+
+    /* =========================================================
+       AGENT RESPONSE
+       ========================================================= */
+
+    .agent-response {
+
+      background: white;
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 12px;
+
+      padding: 19px;
+
+      font-size: 14px;
+
+      line-height: 1.7;
+
+      color: #334155;
+
+    }
+
+
+    .agent-response strong {
+
+      color: var(--text);
+
+      font-weight: 750;
+
+    }
+
+
+    .agent-bullet {
+
+      margin: 5px 0;
+
+      padding-left: 3px;
+
+    }
+
+
+    .agent-paragraph {
+
+      margin-bottom: 12px;
+
+    }
+
+
+    /* =========================================================
+       SAFETY
+       ========================================================= */
+
+    .safety-alert {
+
+      background: #fff7ed;
+
+      border:
+        1px solid #fed7aa;
+
+      color: #9a3412;
+
+      border-radius: 10px;
+
+      padding: 13px;
+
+      margin-bottom: 14px;
+
+      font-weight: 700;
+
+      font-size: 12px;
+
+    }
+
+
+    /* =========================================================
+       RECENT REQUESTS
+       ========================================================= */
 
     .recent {
-      margin-top: 28px;
+
+      margin-top: 25px;
+
     }
+
+
+    .recent-header {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      margin-bottom: 11px;
+
+    }
+
 
     .recent h2 {
-      font-size: 19px;
+
+      margin: 0;
+
+      font-size: 18px;
+
+      letter-spacing: -.2px;
+
     }
 
+
+    .view-all {
+
+      color: var(--blue);
+
+      font-size: 12px;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+    }
+
+
+    .recent-card {
+
+      background: white;
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 12px;
+
+      padding: 14px 16px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 12px;
+
+      margin-bottom: 8px;
+
+      transition:
+        box-shadow .2s ease,
+        transform .2s ease;
+
+    }
+
+
+    .recent-card:hover {
+
+      transform:
+        translateY(-1px);
+
+      box-shadow:
+        0 5px 15px rgba(15,23,42,.05);
+
+    }
+
+
+    .recent-left {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 11px;
+
+      min-width: 0;
+
+    }
+
+
+    .ticket-icon {
+
+      width: 37px;
+
+      height: 37px;
+
+      flex-shrink: 0;
+
+      border-radius: 9px;
+
+      background: #f1f5f9;
+
+      display: grid;
+
+      place-items: center;
+
+      font-size: 15px;
+
+    }
+
+
+    .recent-title {
+
+      font-size: 12px;
+
+      font-weight: 700;
+
+      margin-bottom: 3px;
+
+      white-space: nowrap;
+
+      overflow: hidden;
+
+      text-overflow: ellipsis;
+
+    }
+
+
+    .recent-meta {
+
+      color: var(--muted);
+
+      font-size: 10px;
+
+    }
+
+
+    .badge {
+
+      padding: 6px 9px;
+
+      border-radius: 20px;
+
+      font-size: 10px;
+
+      font-weight: 700;
+
+      white-space: nowrap;
+
+    }
+
+
+    .badge.progress {
+
+      background: var(--orange-light);
+
+      color: var(--orange);
+
+    }
+
+
+    .badge.resolved {
+
+      background: var(--green-light);
+
+      color: var(--green);
+
+    }
+
+
+    /* =========================================================
+       PRODUCT INFO
+       ========================================================= */
+
+    .product-info {
+
+      margin-top: 20px;
+
+      padding: 18px;
+
+      border:
+        1px solid var(--border);
+
+      background: white;
+
+      border-radius: 13px;
+
+    }
+
+
+    .product-info-title {
+
+      font-size: 13px;
+
+      font-weight: 750;
+
+      margin-bottom: 5px;
+
+    }
+
+
     .hint {
-      color: #64748b;
+
+      margin: 0;
+
+      color: var(--muted);
+
+      font-size: 11px;
+
+      line-height: 1.6;
+
+    }
+
+
+    /* =========================================================
+       MY SERVICE REQUESTS
+       ========================================================= */
+
+    .page-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 20px;
+    }
+
+    .page-eyebrow {
+      color: var(--blue);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.1px;
+      margin-bottom: 6px;
+    }
+
+    .page-heading h1 {
+      margin: 0 0 6px;
+      font-size: 29px;
+      line-height: 1.2;
+      letter-spacing: -.7px;
+    }
+
+    .page-heading p {
+      margin: 0;
+      color: var(--muted);
       font-size: 14px;
     }
 
-    .error {
-      color: #b91c1c;
-      background: #fef2f2;
-      padding: 12px;
-      border-radius: 8px;
-      margin-top: 15px;
-      display: none;
+    .ticket-summary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
     }
 
-    @media(max-width: 800px) {
-      .sidebar { display: none; }
-      .main { padding: 20px; }
-      .grid { grid-template-columns: 1fr 1fr; }
+    .mini-summary {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 14px 16px;
     }
-  </style>
+
+    .mini-summary span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      margin-bottom: 5px;
+    }
+
+    .mini-summary strong {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .ticket-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 14px;
+    }
+
+    .filter-btn {
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--text-secondary);
+      padding: 8px 13px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      transition: .2s ease;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--navy);
+      color: white;
+      border-color: var(--navy);
+    }
+
+    .ticket-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 17px;
+      margin-bottom: 9px;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .ticket-card:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 7px 20px rgba(15,23,42,.07);
+    }
+
+    .ticket-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 15px;
+    }
+
+    .ticket-number {
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .ticket-description {
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.5;
+      max-width: 760px;
+    }
+
+    .ticket-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .ticket-tag {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 5px 8px;
+      border-radius: 7px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .ticket-status {
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .ticket-status.open {
+      background: var(--orange-light);
+      color: var(--orange);
+    }
+
+    .ticket-status.progress {
+      background: var(--blue-light);
+      color: var(--blue);
+    }
+
+    .ticket-status.resolved {
+      background: var(--green-light);
+      color: var(--green);
+    }
+
+    .ticket-status.closed {
+      background: #f1f5f9;
+      color: #475569;
+    }
+
+    .empty-tickets {
+      background: white;
+      border: 1px dashed var(--border-dark);
+      border-radius: 15px;
+      padding: 50px 25px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .empty-tickets-icon {
+      font-size: 34px;
+      margin-bottom: 9px;
+    }
+
+    .empty-tickets-title {
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .ticket-detail {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+    }
+
+    .ticket-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .back-button {
+      border: 0;
+      background: transparent;
+      color: var(--blue);
+      padding: 0;
+      margin-bottom: 17px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .detail-note {
+      margin-top: 18px;
+      padding: 13px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.55;
+    }
+
+
+    .ticket-history {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .ticket-history-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .ticket-history-subtitle {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .history-loading,
+    .history-empty,
+    .history-error {
+      padding: 14px;
+      border: 1px dashed var(--border-dark);
+      border-radius: 10px;
+      background: #f8fafc;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .history-item {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .history-item:last-child {
+      border-bottom: 0;
+    }
+
+    .history-time {
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+    .history-content {
+      min-width: 0;
+    }
+
+    .history-type {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .history-message {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .history-recipient {
+      margin-top: 5px;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .history-status {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    @media(max-width: 700px) {
+      .history-item {
+        grid-template-columns: 1fr;
+        gap: 5px;
+      }
+    }
+
+
+    /* =========================================================
+       ADMIN DASHBOARD
+       Direct Firestore data
+       ========================================================= */
+
+    .admin-dashboard {
+      margin-top: 4px;
+    }
+
+    .admin-dashboard-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 18px;
+    }
+
+    .admin-dashboard-title {
+      font-size: 20px;
+      font-weight: 850;
+      color: var(--text);
+    }
+
+    .admin-dashboard-subtitle {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .dashboard-refresh {
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--text);
+      border-radius: 9px;
+      padding: 9px 13px;
+      font-size: 10px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .dashboard-refresh:hover {
+      background: #f8fafc;
+    }
+
+    .dashboard-kpis {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .dashboard-kpi {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 14px;
+    }
+
+    .dashboard-kpi-label {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+      margin-bottom: 7px;
+    }
+
+    .dashboard-kpi-value {
+      color: var(--text);
+      font-size: 22px;
+      font-weight: 850;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .dashboard-panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 17px;
+    }
+
+    .dashboard-panel-title {
+      font-size: 13px;
+      font-weight: 850;
+      color: var(--text);
+      margin-bottom: 13px;
+    }
+
+    .dashboard-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 10px;
+    }
+
+    .dashboard-row:last-child {
+      border-bottom: 0;
+    }
+
+    .dashboard-row-label {
+      color: var(--muted);
+    }
+
+    .dashboard-row-value {
+      color: var(--text);
+      font-weight: 850;
+    }
+
+    .dashboard-loading,
+    .dashboard-error {
+      background: white;
+      border: 1px dashed var(--border-dark);
+      border-radius: 15px;
+      padding: 35px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .dashboard-generated {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 9px;
+      text-align: right;
+    }
+
+    @media(max-width: 1000px) {
+      .dashboard-kpis {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media(max-width: 700px) {
+      .dashboard-kpis {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .admin-dashboard-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+
+    @media(max-width: 1000px) {
+
+      .stats {
+
+        grid-template-columns:
+          repeat(2, 1fr);
+
+      }
+
+    }
+
+
+    @media(max-width: 800px) {
+
+      .sidebar {
+
+        display: none;
+
+      }
+
+
+      .header {
+
+        padding: 0 18px;
+
+      }
+
+
+      .main {
+
+        padding: 23px 18px;
+
+      }
+
+    }
+
+
+    @media(max-width: 600px) {
+
+      .header {
+
+        height: 64px;
+
+      }
+
+
+      .brand {
+
+        font-size: 18px;
+
+      }
+
+
+      .logo {
+
+        width: 36px;
+
+        height: 36px;
+
+      }
+
+
+      .status {
+
+        display: none;
+
+      }
+
+
+      .profile {
+
+        width: 35px;
+
+        height: 35px;
+
+      }
+
+
+      .main {
+
+        padding: 18px 13px;
+
+      }
+
+
+      .welcome {
+
+        display: block;
+
+      }
+
+
+      .welcome h1 {
+
+        font-size: 25px;
+
+      }
+
+
+      .date-box {
+
+        text-align: left;
+
+        margin-top: 7px;
+
+      }
+
+
+      .stats {
+
+        grid-template-columns:
+          repeat(2, 1fr);
+
+        gap: 8px;
+
+      }
+
+
+      .stat-card {
+
+        padding: 13px;
+
+      }
+
+
+      .stat-value {
+
+        font-size: 21px;
+
+      }
+
+
+      .stat-icon {
+
+        width: 34px;
+
+        height: 34px;
+
+      }
+
+
+      .hero {
+
+        padding: 23px 20px;
+
+      }
+
+
+      .hero h2 {
+
+        font-size: 24px;
+
+      }
+
+
+      .request-card {
+
+        padding: 18px;
+
+      }
+
+
+      textarea {
+
+        min-height: 120px;
+
+      }
+
+
+      .actions {
+
+        justify-content: stretch;
+
+      }
+
+
+      .submit {
+
+        width: 100%;
+
+      }
+
+
+      .recent-card {
+
+        align-items: flex-start;
+
+      }
+
+    }
+
+    @media(max-width: 700px) {
+      .ticket-summary {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .ticket-detail-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+  
+
+/* ============================================================
+   FM GENIE — CLEAN CHATGPT-STYLE HOME
+   ============================================================ */
+
+.fm-clean-home {
+  padding: 32px 20px 22px;
+  background: transparent;
+}
+
+.fm-clean-container {
+  width: min(820px, 100%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.fm-clean-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 13px;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, .04);
+  margin-bottom: 22px;
+}
+
+.fm-clean-badge span {
+  color: #7c3aed;
+  font-size: 15px;
+}
+
+.fm-clean-title {
+  margin: 0;
+  color: #111827;
+  font-size: clamp(36px, 5vw, 54px);
+  line-height: 1.08;
+  letter-spacing: -2px;
+  font-weight: 700;
+}
+
+.fm-clean-title span {
+  display: block;
+  color: #6b7280;
+}
+
+.fm-clean-subtitle {
+  max-width: 650px;
+  margin: 20px auto 0;
+  color: #6b7280;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+
+/* ============================================================
+   COMPACT CAPABILITIES
+   ============================================================ */
+
+.fm-capabilities {
+  width: min(1000px, calc(100% - 40px));
+  margin: 12px auto 55px;
+}
+
+.fm-capabilities-header {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.fm-capabilities-eyebrow {
+  color: #7c3aed;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .09em;
+  margin-bottom: 7px;
+}
+
+.fm-capabilities-header h2 {
+  margin: 0;
+  color: #111827;
+  font-size: 24px;
+  letter-spacing: -.5px;
+}
+
+.fm-capabilities-header p {
+  margin: 7px auto 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.fm-capability-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.fm-capability {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 15px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+}
+
+.fm-capability-icon {
+  flex: 0 0 auto;
+  font-size: 20px;
+}
+
+.fm-capability strong {
+  display: block;
+  color: #111827;
+  font-size: 13px;
+  margin-bottom: 3px;
+}
+
+.fm-capability span {
+  display: block;
+  color: #6b7280;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+@media (max-width: 760px) {
+
+  .fm-clean-home {
+    padding-top: 38px;
+  }
+
+  .fm-clean-title {
+    font-size: 36px;
+  }
+
+  .fm-capability-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+</style>
+
 </head>
 
 <body>
 
-<header class="header">
-  <div class="brand">
-    <div class="logo">FM</div>
-    <span>FM Genie</span>
+  <!-- =========================================================
+       HEADER
+       ========================================================= -->
+
+  <header class="header">
+
+```
+<div class="brand">
+
+  <div class="logo">
+    FM
   </div>
-  <div class="status">● System Operational</div>
-</header>
 
-<div class="layout">
+  <span>
+    FM Genie
+  </span>
 
-  <aside class="sidebar">
-    <div class="nav active">🏠 Home</div>
-    <div class="nav">🎫 My Tickets</div>
-    <div class="nav">🔔 Notifications</div>
-    <div class="nav">📊 Admin Dashboard</div>
-  </aside>
+</div>
 
-  <main class="main">
 
-    <section class="welcome">
-      <h1>How can we help?</h1>
-      <p>Describe your facilities issue in your own words. FM Genie will take care of the rest.</p>
-    </section>
+<div class="header-right">
 
-    <section class="request-card">
+  <div class="status">
+    ● System Operational
+  </div>
 
-      <textarea id="issue"
-        placeholder="Example: The air conditioner is not cooling in Meeting Room B on the 3rd floor."></textarea>
+  <div class="notification-wrapper">
 
-      <div class="actions">
-        <button id="submitBtn" onclick="submitIssue()">
-          Create Service Request
-        </button>
+    <button
+      type="button"
+      id="notificationBell"
+      class="notification-bell"
+      title="Latest FM Genie notification"
+      onclick="toggleGlobalNotification(event)"
+    >
+      🔔
+
+      <span
+        id="notificationBadge"
+        class="notification-badge hidden"
+      >
+        1
+      </span>
+
+    </button>
+
+    <div
+      id="notificationPopover"
+      class="notification-popover"
+    >
+
+      <div class="notification-popover-header">
+        Latest FM Genie Update
       </div>
 
-      <div id="error" class="error"></div>
+      <div
+        id="globalNotificationContent"
+        class="notification-popover-body"
+      >
+        Loading latest update...
+      </div>
 
-      <div id="result" class="result">
-        <div class="ticket-id" id="ticketId"></div>
+    </div>
 
-        <div class="grid">
-          <div class="item">
-            <div class="label">Status</div>
-            <div class="value" id="status"></div>
+  </div>
+
+  <div
+    class="profile"
+    title="Current user"
+  >
+    U
+  </div>
+
+</div>
+```
+
+  </header>
+
+  <!-- =========================================================
+       APPLICATION
+       ========================================================= -->
+
+  <div class="layout">
+
+```
+<!-- =======================================================
+     SIDEBAR
+     ======================================================= -->
+
+<aside class="sidebar">
+
+  <div class="sidebar-title">
+    Workspace
+  </div>
+
+
+  <div class="nav active" id="homeNav" onclick="showHome()">
+    🏠 &nbsp; Home
+  </div>
+
+
+  <div class="nav" id="ticketsNav" onclick="showMyTickets()">
+    🎫 &nbsp; My Service Requests
+  </div>
+
+
+
+
+  <div
+    class="nav"
+    id="adminDashboardNav"
+    onclick="showAdminDashboard()"
+  >
+    📊 &nbsp; Admin Dashboard
+  </div>
+
+
+  <div class="sidebar-footer">
+
+    <strong>
+      FM Genie AI
+    </strong>
+
+    Your intelligent facilities
+    management companion —
+    from request to resolution.
+
+  </div>
+
+</aside>
+
+
+
+<!-- =======================================================
+     MAIN
+     ======================================================= -->
+
+<main class="main">
+
+
+  <div id="homeContent">
+
+
+
+
+  <!-- =====================================================
+       FM GENIE CHAT HOME
+       ===================================================== -->
+
+  <section class="fm-clean-home">
+
+    <div class="fm-clean-container">
+
+      <div class="fm-clean-badge">
+        <span>✦</span>
+        FM Genie AI
+      </div>
+
+      <h1 class="fm-clean-title">
+        How can I help with your
+        <span>facilities needs?</span>
+      </h1>
+
+      <p class="fm-clean-subtitle">
+        Describe your facilities issue in your own words.
+        No forms. No technical terminology.
+      </p>
+
+    </div>
+
+  </section>
+
+  <!-- =====================================================
+       CREATE REQUEST
+       ===================================================== -->
+
+  <section class="request-card">
+
+
+    <div class="request-header">
+
+      <div class="genie-icon">
+        ✨
+      </div>
+
+
+      <div>
+
+        <div class="request-title">
+          What can FM Genie help you with?
+        </div>
+
+        <div class="request-subtitle">
+          Tell me what is happening.
+          No forms. No technical terminology.
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <textarea
+      id="issue"
+      placeholder="Example: The air conditioner is not cooling in Meeting Room B on the 3rd floor..."
+    ></textarea>
+
+
+
+    <div class="quick-label">
+      Or choose a common request
+    </div>
+
+
+    <div class="quick-actions">
+
+
+      <button
+        type="button"
+        class="quick-btn"
+        onclick="setIssue('The air conditioner is not working properly.')"
+      >
+        ❄️ Air Conditioning
+      </button>
+
+
+      <button
+        type="button"
+        class="quick-btn"
+        onclick="setIssue('There is an electrical or lighting issue.')"
+      >
+        💡 Electrical
+      </button>
+
+
+      <button
+        type="button"
+        class="quick-btn"
+        onclick="setIssue('There is a plumbing or water-related issue.')"
+      >
+        🚰 Plumbing
+      </button>
+
+
+      <button
+        type="button"
+        class="quick-btn"
+        onclick="setIssue('There is an issue with the cafeteria.')"
+      >
+        🍽️ Cafeteria
+      </button>
+
+
+      <button
+        type="button"
+        class="quick-btn"
+        onclick="setIssue('There is a housekeeping or cleanliness issue.')"
+      >
+        🧹 Housekeeping
+      </button>
+
+
+      <button
+        type="button"
+        class="quick-btn"
+        onclick="setIssue('There is an issue with furniture or a workstation.')"
+      >
+        🪑 Furniture
+      </button>
+
+
+    </div>
+
+
+
+    <div class="actions">
+
+      <button
+        type="button"
+        class="submit"
+        id="submitBtn"
+        onclick="submitIssue()"
+      >
+        ➤ Send to FM Genie
+      </button>
+
+    </div>
+
+
+
+    <!-- ===================================================
+         PROCESSING
+         =================================================== -->
+
+    <div
+      id="loading"
+      class="loading"
+    >
+
+      <div class="spinner"></div>
+
+      <span id="loadingText">
+        FM Genie is understanding your request...
+      </span>
+
+    </div>
+
+
+
+    <!-- ===================================================
+         ERROR
+         =================================================== -->
+
+    <div
+      id="error"
+      class="error"
+    ></div>
+
+
+
+    <!-- ===================================================
+         AGENT RESPONSE
+         =================================================== -->
+
+    <div
+      id="result"
+      class="result"
+    >
+
+
+      <div class="success-header">
+
+        <div class="success-icon">
+          ✓
+        </div>
+
+
+        <div>
+
+          <div class="success-title">
+            FM Genie Response
           </div>
 
-          <div class="item">
-            <div class="label">Category</div>
-            <div class="value" id="category"></div>
+          <div class="success-message">
+            Your facilities request has been processed.
           </div>
 
-          <div class="item">
-            <div class="label">Priority</div>
-            <div class="value" id="priority"></div>
-          </div>
+        </div>
 
-          <div class="item">
-            <div class="label">SLA</div>
-            <div class="value" id="sla"></div>
-          </div>
+      </div>
 
-          <div class="item">
-            <div class="label">Location</div>
-            <div class="value" id="location"></div>
-          </div>
 
-          <div class="item">
-            <div class="label">Responsible Team</div>
-            <div class="value" id="team"></div>
-          </div>
+      <div
+        id="agentResponse"
+        class="agent-response"
+      ></div>
+
+
+    </div>
+
+
+  </section>
+
+
+
+  
+
+
+
+
+  
+
+
+  
+
+
+  <!-- =====================================================
+       FM GENIE CAPABILITIES
+       ===================================================== -->
+
+  <section class="fm-capabilities">
+
+    <div class="fm-capabilities-header">
+
+      <div class="fm-capabilities-eyebrow">
+        ✦ FM Genie capabilities
+      </div>
+
+      <h2>
+        From your words to resolution.
+      </h2>
+
+      <p>
+        One intelligent assistant for the complete facilities service journey.
+      </p>
+
+    </div>
+
+    <div class="fm-capability-grid">
+
+      <div class="fm-capability">
+        <div class="fm-capability-icon">🤖</div>
+        <div>
+          <strong>Understand your issue</strong>
+          <span>Describe the problem naturally.</span>
         </div>
       </div>
 
-    </section>
+      <div class="fm-capability">
+        <div class="fm-capability-icon">🎯</div>
+        <div>
+          <strong>Automatic categorization</strong>
+          <span>Identifies the right FM category.</span>
+        </div>
+      </div>
 
-    <section class="recent">
-      <h2>FM Genie</h2>
-      <p class="hint">
-        AI-powered facilities management — ticket creation, SLA monitoring,
-        notifications and escalation.
-      </p>
-    </section>
+      <div class="fm-capability">
+        <div class="fm-capability-icon">⚡</div>
+        <div>
+          <strong>Smart routing</strong>
+          <span>Routes requests to the right team.</span>
+        </div>
+      </div>
 
-  </main>
-</div>
+      <div class="fm-capability">
+        <div class="fm-capability-icon">⏱</div>
+        <div>
+          <strong>SLA monitoring</strong>
+          <span>Tracks service levels and deadlines.</span>
+        </div>
+      </div>
 
-<script>
+      <div class="fm-capability">
+        <div class="fm-capability-icon">🔔</div>
+        <div>
+          <strong>Keep you informed</strong>
+          <span>Provides updates throughout the journey.</span>
+        </div>
+      </div>
 
-const API_BASE = "";
+      <div class="fm-capability">
+        <div class="fm-capability-icon">🚨</div>
+        <div>
+          <strong>Escalation management</strong>
+          <span>Highlights critical and SLA-sensitive issues.</span>
+        </div>
+      </div>
 
-const APP_NAME = "fm_genie";
-const USER_ID = "demo";
+    </div>
 
-let sessionId = null;
+  </section>
 
-async function createSession() {
+  </div>
 
-  const response = await fetch(
-    `${API_BASE}/api/apps/${APP_NAME}/users/${USER_ID}/sessions`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: "{}"
+
+  <!-- =====================================================
+       MY SERVICE REQUESTS
+       ===================================================== -->
+
+
+  <section
+    id="adminDashboardPage"
+    style="display:none;"
+  >
+
+    <div class="admin-dashboard">
+
+      <div class="admin-dashboard-header">
+
+        <div>
+
+          <div class="admin-dashboard-title">
+            FM Operations Dashboard
+          </div>
+
+          <div class="admin-dashboard-subtitle">
+            Live operational KPIs from the FM Genie ticket database.
+          </div>
+
+        </div>
+
+        <button
+          type="button"
+          class="dashboard-refresh"
+          onclick="loadAdminDashboard()"
+        >
+          ↻ Refresh
+        </button>
+
+      </div>
+
+
+      <div
+        id="adminDashboardContent"
+        class="dashboard-loading"
+      >
+        Loading live FM dashboard data...
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section id="ticketsPage" style="display:none;">
+
+    <div class="page-heading">
+      <div>
+        <div class="page-eyebrow">WORKSPACE</div>
+        <h1>My Service Requests</h1>
+        <p>Track the facilities requests created through FM Genie.</p>
+      </div>
+    </div>
+
+    <div class="ticket-summary">
+      <div class="mini-summary">
+        <span>Total</span>
+        <strong id="ticketTotal">0</strong>
+      </div>
+      <div class="mini-summary">
+        <span>Open / Re-open</span>
+        <strong id="ticketOpen">0</strong>
+      </div>
+      <div class="mini-summary">
+        <span>In Progress</span>
+        <strong id="ticketProgress">0</strong>
+      </div>
+      <div class="mini-summary">
+        <span>Resolved</span>
+        <strong id="ticketResolved">0</strong>
+      </div>
+
+      <div class="mini-summary">
+        <span>Closed</span>
+        <strong id="ticketClosed">0</strong>
+      </div>
+    </div>
+
+    <div class="ticket-filters">
+      <button type="button" class="filter-btn active" onclick="filterTickets('ALL', this)">All</button>
+      <button type="button" class="filter-btn" onclick="filterTickets('OPEN', this)">Open</button>
+      <button type="button" class="filter-btn" onclick="filterTickets('REOPENED', this)">Reopened</button>
+      <button type="button" class="filter-btn" onclick="filterTickets('IN_PROGRESS', this)">In Progress</button>
+      <button type="button" class="filter-btn" onclick="filterTickets('RESOLVED', this)">Resolved</button>
+      <button type="button" class="filter-btn" onclick="filterTickets('CLOSED', this)">Closed</button>
+    </div>
+
+    <div id="ticketList"></div>
+
+  </section>
+
+
+</main>
+```
+
+  </div>
+
+  <!-- =========================================================
+       JAVASCRIPT
+       ========================================================= -->
+
+  <script>
+
+
+    /*
+     * ==========================================================
+     * FM GENIE CONFIGURATION
+     * ==========================================================
+     *
+     * IMPORTANT:
+     *
+     * API_BASE is intentionally empty.
+     *
+     * The browser calls:
+     *
+     *     /api/...
+     *
+     * The Flask frontend server proxies those requests to:
+     *
+     *     https://fm-genie-ffp75lvgda-el.a.run.app
+     *
+     * This preserves the existing CORS-safe architecture.
+     *
+     * ==========================================================
+     */
+
+
+    const API_BASE = "";
+
+    const APP_NAME = "fm_genie";
+
+    const USER_ID = "demo";
+
+    let sessionId = null;
+
+
+
+    /* ==========================================================
+       DYNAMIC GREETING
+       ========================================================== */
+
+
+    function updateGreeting() {
+
+      const hour =
+        new Date().getHours();
+
+
+      let greeting =
+        "Good Evening";
+
+
+      if (hour < 12) {
+
+        greeting =
+          "Good Morning";
+
+      }
+
+      else if (hour < 17) {
+
+        greeting =
+          "Good Afternoon";
+
+      }
+
+
+      const greetingElement =
+        document.getElementById("greeting");
+
+      if (greetingElement) {
+        greetingElement.textContent =
+          greeting + ", User 👋";
+      }
+
+
+      const dateElement =
+        document.getElementById("currentDate");
+
+      if (dateElement) {
+        const date =
+          new Date();
+
+        dateElement.textContent =
+          date.toLocaleDateString(
+            undefined,
+            {
+              weekday: "long",
+              day: "numeric",
+              month: "long",
+              year: "numeric"
+            }
+          );
+      }
+
     }
-  );
 
-  if (!response.ok) {
-    throw new Error("Unable to create FM Genie session.");
-  }
 
-  const data = await response.json();
-  sessionId = data.id;
-}
+    updateGreeting();
 
-async function submitIssue() {
 
-  const issue = document.getElementById("issue").value.trim();
-  const button = document.getElementById("submitBtn");
-  const result = document.getElementById("result");
-  const error = document.getElementById("error");
 
-  if (!issue) {
-    error.textContent = "Please describe the issue first.";
-    error.style.display = "block";
-    return;
-  }
+    /* ==========================================================
+       QUICK ACTION
+       ========================================================== */
 
-  error.style.display = "none";
-  result.classList.remove("show");
 
-  button.disabled = true;
-  button.textContent = "FM Genie is processing...";
+    function setIssue(text) {
 
-  try {
+      const textarea =
+        document.getElementById("issue");
 
-    if (!sessionId) {
-      await createSession();
+
+      textarea.value =
+        text;
+
+
+      textarea.focus();
+
     }
 
-    const response = await fetch(
-      `${API_BASE}/api/run`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          appName: APP_NAME,
-          userId: USER_ID,
-          sessionId: sessionId,
-          newMessage: {
-            role: "user",
-            parts: [
-              {
-                text: issue
-              }
-            ]
+
+
+    /* ==========================================================
+       CREATE SESSION
+       ========================================================== */
+
+
+    async function createSession() {
+
+
+      const response =
+        await fetch(
+          `${API_BASE}/api/apps/${APP_NAME}/users/${USER_ID}/sessions`,
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type":
+                "application/json"
+            },
+
+            body: "{}"
           }
-        })
+        );
+
+
+      if (!response.ok) {
+
+
+        const text =
+          await response.text();
+
+
+        console.error(
+          "Session creation failed:",
+          response.status,
+          text
+        );
+
+
+        throw new Error(
+          "Unable to create FM Genie session."
+        );
+
+      }
+
+
+      const data =
+        await response.json();
+
+
+      console.log(
+        "FM Genie session:",
+        data
+      );
+
+
+      sessionId =
+        data.id ||
+        data.sessionId ||
+        data.session_id;
+
+
+      if (!sessionId) {
+
+
+        console.error(
+          "Invalid session response:",
+          data
+        );
+
+
+        throw new Error(
+          "FM Genie session was created but no session ID was returned."
+        );
+
+      }
+
+    }
+
+
+
+    /* ==========================================================
+       SUBMIT ISSUE
+       ========================================================== */
+
+
+    async function submitIssue() {
+
+
+      const issue =
+        document
+          .getElementById("issue")
+          .value
+          .trim();
+
+
+      const button =
+        document
+          .getElementById("submitBtn");
+
+
+      const result =
+        document
+          .getElementById("result");
+
+
+      const error =
+        document
+          .getElementById("error");
+
+
+      const loading =
+        document
+          .getElementById("loading");
+
+
+      const loadingText =
+        document
+          .getElementById("loadingText");
+
+
+
+      /* --------------------------------------------------------
+         VALIDATE
+         -------------------------------------------------------- */
+
+
+      if (!issue) {
+
+
+        error.textContent =
+          "Please describe the issue first.";
+
+
+        error.style.display =
+          "block";
+
+
+        return;
+
+      }
+
+
+
+      /* --------------------------------------------------------
+         RESET
+         -------------------------------------------------------- */
+
+
+      error.style.display =
+        "none";
+
+
+      result.classList.remove(
+        "show"
+      );
+
+
+      document
+        .getElementById("agentResponse")
+        .innerHTML = "";
+
+
+
+      /* --------------------------------------------------------
+         SHOW PROCESSING
+         -------------------------------------------------------- */
+
+
+      loading.classList.add(
+        "show"
+      );
+
+
+      button.disabled =
+        true;
+
+
+      button.textContent =
+        "FM Genie is working...";
+
+
+
+      const messages = [
+
+        "FM Genie is understanding your request...",
+
+        "Identifying the issue category...",
+
+        "Determining priority and SLA...",
+
+        "Checking the appropriate facilities team...",
+
+        "Creating and routing your service request..."
+
+      ];
+
+
+      let messageIndex = 0;
+
+
+      loadingText.textContent =
+        messages[0];
+
+
+      const messageTimer =
+        setInterval(
+          () => {
+
+            messageIndex =
+              (messageIndex + 1) %
+              messages.length;
+
+
+            loadingText.textContent =
+              messages[messageIndex];
+
+          },
+          1100
+        );
+
+
+
+      try {
+
+
+        /* ------------------------------------------------------
+           CREATE SESSION
+           ------------------------------------------------------ */
+
+
+        if (!sessionId) {
+
+          await createSession();
+
+        }
+
+
+
+        /* ------------------------------------------------------
+           SEND MESSAGE TO ADK
+           ------------------------------------------------------ */
+
+
+        const response =
+          await fetch(
+            `${API_BASE}/api/run`,
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json"
+              },
+
+              body: JSON.stringify({
+
+                appName:
+                  APP_NAME,
+
+                userId:
+                  USER_ID,
+
+                sessionId:
+                  sessionId,
+
+                newMessage: {
+
+                  role:
+                    "user",
+
+                  parts: [
+
+                    {
+                      text:
+                        issue
+                    }
+
+                  ]
+
+                }
+
+              })
+
+            }
+          );
+
+
+
+        /* ------------------------------------------------------
+           HTTP ERROR
+           ------------------------------------------------------ */
+
+
+        if (!response.ok) {
+
+
+          const text =
+            await response.text();
+
+
+          console.error(
+            "FM Genie API error:",
+            response.status,
+            text
+          );
+
+
+          throw new Error(
+            "FM Genie could not process the request."
+          );
+
+        }
+
+
+
+        /* ------------------------------------------------------
+           PARSE RESPONSE
+           ------------------------------------------------------ */
+
+
+        const events =
+          await response.json();
+
+
+        console.log(
+          "FM Genie /run response:",
+          events
+        );
+
+
+
+        /* ------------------------------------------------------
+           DISPLAY RESPONSE
+           ------------------------------------------------------ */
+
+
+        displayResponse(
+          events
+        );
+
+
+      }
+
+
+      catch (err) {
+
+
+        console.error(
+          "FM Genie error:",
+          err
+        );
+
+
+        error.textContent =
+          err.message ||
+          "Something went wrong while processing the request.";
+
+
+        error.style.display =
+          "block";
+
+      }
+
+
+      finally {
+
+
+        clearInterval(
+          messageTimer
+        );
+
+
+        loading.classList.remove(
+          "show"
+        );
+
+
+        button.disabled =
+          false;
+
+
+        button.textContent =
+          "➤ Send to FM Genie";
+
+      }
+
+    }
+
+
+
+    /* ==========================================================
+       EXTRACT FINAL MODEL TEXT
+       ========================================================== */
+
+
+    function extractFinalText(events) {
+
+
+      let finalText =
+        "";
+
+
+      if (
+        Array.isArray(events)
+      ) {
+
+
+        for (
+          const event of events
+        ) {
+
+
+          const parts =
+            event.content?.parts ||
+            [];
+
+
+          for (
+            const part of parts
+          ) {
+
+
+            /*
+             * Only model-generated text.
+             *
+             * Ignore:
+             *
+             * functionCall
+             * functionResponse
+             *
+             */
+
+
+            if (
+
+              typeof part.text ===
+                "string"
+
+              &&
+
+              part.text.trim()
+
+            ) {
+
+
+              finalText =
+                part.text.trim();
+
+            }
+
+          }
+
+        }
+
+      }
+
+
+      return finalText;
+
+    }
+
+
+
+    /* ==========================================================
+       DISPLAY RESPONSE
+       ========================================================== */
+
+
+    function displayResponse(events) {
+
+
+      console.log(
+        "Extracting final FM Genie response..."
+      );
+
+
+      const responseText =
+        extractFinalText(
+          events
+        );
+
+
+      console.log(
+        "Final agent response:",
+        responseText
+      );
+
+
+
+      /* --------------------------------------------------------
+         NO RESPONSE
+         -------------------------------------------------------- */
+
+
+      if (!responseText) {
+
+
+        const error =
+          document
+            .getElementById("error");
+
+
+        error.textContent =
+          "FM Genie processed the request, but no response text was returned.";
+
+
+        error.style.display =
+          "block";
+
+
+        return;
+
+      }
+
+
+
+      /* --------------------------------------------------------
+         FORMAT RESPONSE
+         -------------------------------------------------------- */
+
+
+      const formattedResponse =
+        formatAgentResponse(
+          responseText
+        );
+
+
+
+      /* --------------------------------------------------------
+         DISPLAY
+         -------------------------------------------------------- */
+
+
+      document
+        .getElementById("agentResponse")
+        .innerHTML =
+          formattedResponse;
+
+
+      document
+        .getElementById("result")
+        .classList.add(
+          "show"
+        );
+
+
+      /* --------------------------------------------------------
+         Scroll response into view
+         -------------------------------------------------------- */
+
+
+      setTimeout(
+        () => {
+
+          document
+            .getElementById("result")
+            .scrollIntoView({
+              behavior: "smooth",
+              block: "nearest"
+            });
+
+        },
+        100
+      );
+
+    }
+
+
+
+    /* ==========================================================
+       FORMAT AGENT RESPONSE
+       ========================================================== */
+
+
+    function formatAgentResponse(text) {
+
+
+      /*
+       * Escape HTML first.
+       *
+       * This protects the page from
+       * agent-generated HTML.
+       */
+
+
+      let html =
+        escapeHtml(
+          text
+        );
+
+
+
+      /* --------------------------------------------------------
+         SAFETY DETECTION
+         -------------------------------------------------------- */
+
+
+      const safetyKeywords = [
+
+        "SAFETY-CRITICAL",
+
+        "safety-critical",
+
+        "safety critical",
+
+        "IMMEDIATE RESPONSE"
+
+      ];
+
+
+      const isSafety =
+        safetyKeywords.some(
+          keyword =>
+            text.includes(
+              keyword
+            )
+        );
+
+
+
+      /* --------------------------------------------------------
+         BOLD MARKDOWN
+         -------------------------------------------------------- */
+
+
+      html =
+        html.replace(
+          /\*\*(.*?)\*\*/g,
+          "<strong>$1</strong>"
+        );
+
+
+
+      /* --------------------------------------------------------
+         BULLETS
+         -------------------------------------------------------- */
+
+
+      html =
+        html.replace(
+          /^\s*\*\s+(.*)$/gm,
+          '<div class="agent-bullet">• $1</div>'
+        );
+
+
+
+      /* --------------------------------------------------------
+         LINE BREAKS
+         -------------------------------------------------------- */
+
+
+      html =
+        html.replace(
+          /\n/g,
+          "<br>"
+        );
+
+
+
+      /* --------------------------------------------------------
+         CLEAN BULLET SPACING
+         -------------------------------------------------------- */
+
+
+      html =
+        html.replace(
+          /<br><div class="agent-bullet">/g,
+          '<div class="agent-bullet">'
+        );
+
+
+      html =
+        html.replace(
+          /<\/div><br>/g,
+          "</div>"
+        );
+
+
+
+      /* --------------------------------------------------------
+         SAFETY ALERT
+         -------------------------------------------------------- */
+
+
+      if (isSafety) {
+
+
+        html =
+
+          `
+
+            <div class="safety-alert">
+
+              ⚠️ Safety-critical issue detected.
+
+              Please follow the immediate-response
+              guidance provided below.
+
+            </div>
+
+            ${html}
+
+          `;
+
+      }
+
+
+      return html;
+
+    }
+
+
+
+    /* ==========================================================
+       HTML ESCAPE
+       ========================================================== */
+
+
+    function escapeHtml(text) {
+
+
+      const div =
+        document.createElement(
+          "div"
+        );
+
+
+      div.textContent =
+        text;
+
+
+      return div.innerHTML;
+
+    }
+
+
+
+    /* ==========================================================
+       MY SERVICE REQUESTS
+       Live backend / Firestore data
+       ========================================================== */
+
+    let currentTicketFilter = "ALL";
+    let myTickets = [];
+    let ticketsLoaded = false;
+    let ticketsLoading = false;
+
+
+    function normalizeTicket(ticket) {
+      return {
+        ticket_id:
+          ticket.ticket_id ||
+          ticket.id ||
+          ticket.document_id ||
+          "Unknown",
+
+        issue_description:
+          ticket.issue_description ||
+          ticket.description ||
+          ticket.issue ||
+          "Facilities service request",
+
+        status:
+          (ticket.status || "OPEN").toUpperCase(),
+
+        category:
+          ticket.category || "",
+
+        priority:
+          ticket.priority || "",
+
+        sla:
+          ticket.sla || "",
+
+        location:
+          ticket.location || "",
+
+        responsible_team:
+          ticket.responsible_team ||
+          ticket.assigned_team ||
+          ticket.team ||
+          "",
+
+        requester:
+          ticket.requester || "",
+
+        created_at:
+          ticket.created_at || "",
+
+        updated_at:
+          ticket.updated_at || ""
+      };
+    }
+
+
+    async function fetchMyTickets() {
+
+      if (ticketsLoading) {
+        return;
+      }
+
+      ticketsLoading = true;
+
+      const container =
+        document.getElementById("ticketList");
+
+      if (container) {
+        container.innerHTML = `
+          <div class="empty-tickets">
+            <div class="empty-tickets-icon">⏳</div>
+            <div class="empty-tickets-title">
+              Loading your service requests...
+            </div>
+            <div>
+              FM Genie is retrieving your requests from Firestore.
+            </div>
+          </div>
+        `;
+      }
+
+      try {
+
+        /*
+         * Always use a fresh session for the ticket-list request.
+         *
+         * This prevents an earlier conversation from influencing
+         * the intent and ensures FM Genie receives an explicit
+         * "list my tickets" request.
+         */
+
+        const response =
+          await fetch(
+            `${API_BASE}/api/apps/${APP_NAME}/users/${USER_ID}/sessions`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: "{}"
+            }
+          );
+
+        if (!response.ok) {
+          const errorText =
+            await response.text();
+
+          console.error(
+            "Ticket-list session creation failed:",
+            response.status,
+            errorText
+          );
+
+          throw new Error(
+            "Unable to connect to FM Genie."
+          );
+        }
+
+        const session =
+          await response.json();
+
+        const ticketSessionId =
+          session.id ||
+          session.sessionId ||
+          session.session_id;
+
+        if (!ticketSessionId) {
+          throw new Error(
+            "FM Genie did not return a valid session."
+          );
+        }
+
+
+        /*
+         * Explicitly instruct the agent to use
+         * list_my_tickets rather than the admin dashboard.
+         */
+
+        const ticketRequest =
+          "List my service requests. " +
+          "Use list_my_tickets to retrieve my tickets from Firestore. " +
+          "Do not use the FM admin dashboard. " +
+          "Return the ticket records.";
+
+        const runResponse =
+          await fetch(
+            `${API_BASE}/api/run`,
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json"
+              },
+
+              body: JSON.stringify({
+
+                appName:
+                  APP_NAME,
+
+                userId:
+                  USER_ID,
+
+                sessionId:
+                  ticketSessionId,
+
+                newMessage: {
+
+                  role:
+                    "user",
+
+                  parts: [
+                    {
+                      text:
+                        ticketRequest
+                    }
+                  ]
+
+                }
+
+              })
+
+            }
+          );
+
+
+        if (!runResponse.ok) {
+
+          const errorText =
+            await runResponse.text();
+
+          console.error(
+            "Ticket-list API error:",
+            runResponse.status,
+            errorText
+          );
+
+          throw new Error(
+            "FM Genie could not retrieve your service requests."
+          );
+
+        }
+
+
+        const events =
+          await runResponse.json();
+
+        console.log(
+          "My Service Requests response:",
+          events
+        );
+
+
+        /*
+         * Extract the structured tool response when available.
+         */
+
+        let records = [];
+
+        /*
+         * ADK can return the tool result inside a
+         * functionResponse object. Walk the complete
+         * event/part structure and accept the first
+         * valid ticket array.
+         *
+         * IMPORTANT:
+         * This only changes frontend response parsing.
+         * Firestore, list_my_tickets(), filters,
+         * rendering and KPI logic are untouched.
+         */
+
+        function collectTicketRecords(value) {
+
+          if (!value || typeof value !== "object") {
+            return [];
+          }
+
+
+          /*
+           * IMPORTANT:
+           * Check for an actual ticket array BEFORE treating
+           * an arbitrary ADK event array as records.
+           */
+          if (Array.isArray(value.tickets)) {
+            return value.tickets;
+          }
+
+
+          /*
+           * A real ticket must contain ticket-specific fields.
+           *
+           * Do NOT use "id" alone here because ADK event objects
+           * can also contain IDs / invocation IDs.
+           */
+          if (Array.isArray(value)) {
+
+            const ticketArray =
+              value.filter(
+                item =>
+                  item &&
+                  typeof item === "object" &&
+                  (
+                    item.ticket_id ||
+                    item.ticketId
+                  ) &&
+                  (
+                    item.status ||
+                    item.category ||
+                    item.priority ||
+                    item.issue_description ||
+                    item.description ||
+                    item.requester
+                  )
+              );
+
+            if (ticketArray.length) {
+              return ticketArray;
+            }
+
+
+            /*
+             * The array itself may simply be an ADK event list.
+             * Walk each event looking for the real tool response.
+             */
+            for (const item of value) {
+
+              const found =
+                collectTicketRecords(item);
+
+              if (found.length) {
+                return found;
+              }
+
+            }
+
+            return [];
+          }
+
+
+          /*
+           * ADK functionResponse:
+           *
+           * {
+           *   functionResponse: {
+           *     response: {
+           *       tickets: [...]
+           *     }
+           *   }
+           * }
+           */
+          if (value.functionResponse) {
+
+            const found =
+              collectTicketRecords(
+                value.functionResponse
+              );
+
+            if (found.length) {
+              return found;
+            }
+
+          }
+
+
+          /*
+           * Nested response/result/data/content/parts
+           * structures used by different ADK response formats.
+           */
+          for (
+            const key of [
+              "response",
+              "result",
+              "data",
+              "content",
+              "parts"
+            ]
+          ) {
+
+            if (value[key]) {
+
+              const found =
+                collectTicketRecords(
+                  value[key]
+                );
+
+              if (found.length) {
+                return found;
+              }
+
+            }
+
+          }
+
+
+          return [];
+        }
+
+        records =
+          collectTicketRecords(events);
+
+        console.log(
+          "Parsed My Service Requests records:",
+          records.length,
+          records
+        );
+
+
+        /*
+         * If structured tool output is not exposed by the
+         * proxy, attempt to recover ticket records from
+         * the final model response.
+         */
+
+        if (!records.length) {
+
+          const finalText =
+            extractFinalText(events);
+
+          console.log(
+            "Ticket-list final text:",
+            finalText
+          );
+
+          records =
+            parseTicketsFromText(
+              finalText
+            );
+
+        }
+
+
+        myTickets =
+          records.map(
+            normalizeTicket
+          );
+
+
+        ticketsLoaded = true;
+
+        updateTicketSummary();
+
+        renderTickets();
+
+
+      } catch (error) {
+
+        console.error(
+          "Unable to load My Service Requests:",
+          error
+        );
+
+        myTickets = [];
+
+        const container =
+          document.getElementById("ticketList");
+
+        if (container) {
+
+          container.innerHTML = `
+            <div class="empty-tickets">
+
+              <div class="empty-tickets-icon">
+                ⚠️
+              </div>
+
+              <div class="empty-tickets-title">
+                Unable to load service requests
+              </div>
+
+              <div>
+                ${escapeHtml(
+                  error.message ||
+                  "Please try again."
+                )}
+              </div>
+
+              <button
+                type="button"
+                class="filter-btn"
+                style="margin-top:15px;"
+                onclick="fetchMyTickets()"
+              >
+                Retry
+              </button>
+
+            </div>
+          `;
+
+        }
+
+      } finally {
+
+        ticketsLoading =
+          false;
+
+      }
+
+    }
+
+
+    function parseTicketsFromText(text) {
+
+      if (!text) {
+        return [];
+      }
+
+      const tickets = [];
+
+      /*
+       * Current FM Genie response format:
+       *
+       * 1. **Ticket ID:** `FM-WNCLQUF5`
+       *    - **Issue Description:** Food not available in Cafeteria
+       *    - **Status:** OPEN
+       *    - **Category:** Cafeteria
+       *    - **Priority:** Medium (SLA: 4 hours)
+       *    - **Location:** Cafeteria
+       *    - **Responsible Team:** *Not assigned*
+       *    - **Created:** 2026-08-29
+       *
+       * Also retain support for the older:
+       *
+       * FM-XXXX | Status: OPEN | Priority: Medium
+       */
+
+      const lines = text.split(/\r?\n/);
+
+      let current = null;
+
+      function clean(value) {
+        return (value || "")
+          .replace(/\*\*/g, "")
+          .replace(/`/g, "")
+          .replace(/\*/g, "")
+          .trim();
+      }
+
+      function finishCurrent() {
+        if (current && current.ticket_id) {
+          tickets.push(current);
+        }
+
+        current = null;
+      }
+
+      for (const rawLine of lines) {
+
+        const line = rawLine.trim();
+
+        /*
+         * Markdown ticket format.
+         */
+        const ticketMatch = line.match(
+          /(?:Ticket ID:\s*)?`?(FM-[A-Z0-9]+)`?/i
+        );
+
+        if (
+          ticketMatch &&
+          (
+            line.includes("Ticket ID") ||
+            /^\d+\.\s*\*?\*?Ticket ID/i.test(line)
+          )
+        ) {
+
+          finishCurrent();
+
+          current = {
+            ticket_id: ticketMatch[1].toUpperCase(),
+            issue_description: "",
+            status: "OPEN",
+            category: "",
+            priority: "",
+            sla: "",
+            location: "",
+            responsible_team: "",
+            requester: "Demo User",
+            created_at: "",
+            updated_at: ""
+          };
+
+          continue;
+        }
+
+        if (!current) {
+
+          /*
+           * Legacy single-line format.
+           */
+          const legacy = line.match(
+            /(FM-[A-Z0-9]+).*?Status:\s*`?([A-Z_]+)`?.*?Priority:\s*`?([A-Za-z]+)`?/i
+          );
+
+          if (legacy) {
+
+            tickets.push({
+              ticket_id: legacy[1].toUpperCase(),
+              issue_description: "",
+              status: legacy[2].toUpperCase(),
+              category: "",
+              priority: clean(legacy[3]),
+              sla: "",
+              location: "",
+              responsible_team: "",
+              requester: "Demo User",
+              created_at: "",
+              updated_at: ""
+            });
+
+          }
+
+          continue;
+        }
+
+        let match;
+
+        match = line.match(
+          /^[-•]\s*\*?\*?Issue Description:\*?\*?\s*(.*)$/i
+        );
+
+        if (match) {
+          current.issue_description = clean(match[1]);
+          continue;
+        }
+
+        match = line.match(
+          /^[-•]\s*\*?\*?Status:\*?\*?\s*`?([^`]+)`?/i
+        );
+
+        if (match) {
+          current.status = clean(match[1]).toUpperCase();
+          continue;
+        }
+
+        match = line.match(
+          /^[-•]\s*\*?\*?Category:\*?\*?\s*(.*)$/i
+        );
+
+        if (match) {
+          current.category = clean(match[1]);
+          continue;
+        }
+
+        match = line.match(
+          /^[-•]\s*\*?\*?Priority:\*?\*?\s*(.*)$/i
+        );
+
+        if (match) {
+
+          const value = clean(match[1]);
+
+          const slaMatch = value.match(
+            /\(SLA:\s*([^)]+)\)/i
+          );
+
+          if (slaMatch) {
+            current.sla = clean(slaMatch[1]);
+          }
+
+          current.priority = clean(
+            value.replace(/\(SLA:[^)]+\)/i, "")
+          );
+
+          continue;
+        }
+
+        match = line.match(
+          /^[-•]\s*\*?\*?Location:\*?\*?\s*(.*)$/i
+        );
+
+        if (match) {
+          current.location = clean(match[1]);
+          continue;
+        }
+
+        match = line.match(
+          /^[-•]\s*\*?\*?Responsible Team:\*?\*?\s*(.*)$/i
+        );
+
+        if (match) {
+          current.responsible_team = clean(match[1]);
+          continue;
+        }
+
+        match = line.match(
+          /^[-•]\s*\*?\*?Created:\*?\*?\s*(.*)$/i
+        );
+
+        if (match) {
+          current.created_at = clean(match[1]);
+          continue;
+        }
+
+        match = line.match(
+          /^[-•]\s*\*?\*?(?:Updated|Updated At):\*?\*?\s*(.*)$/i
+        );
+
+        if (match) {
+          current.updated_at = clean(match[1]);
+          continue;
+        }
+
+        /*
+         * Older response format:
+         *
+         * • FM-XXXX | Priority: Medium | Status: OPEN | SLA: 4 hours
+         */
+        const compact = line.match(
+          /(FM-[A-Z0-9]+).*?Status:\s*`?([A-Z_]+)`?.*?Priority:\s*`?([A-Za-z]+)`?/i
+        );
+
+        if (compact) {
+
+          finishCurrent();
+
+          current = {
+            ticket_id: compact[1].toUpperCase(),
+            issue_description: "",
+            status: compact[2].toUpperCase(),
+            category: "",
+            priority: clean(compact[3]),
+            sla: "",
+            location: "",
+            responsible_team: "",
+            requester: "Demo User",
+            created_at: "",
+            updated_at: ""
+          };
+        }
+
+      }
+
+      finishCurrent();
+
+      /*
+       * Remove accidental duplicates while preserving order.
+       */
+      const unique = [];
+      const seen = new Set();
+
+      for (const ticket of tickets) {
+
+        if (!ticket.ticket_id) {
+          continue;
+        }
+
+        if (seen.has(ticket.ticket_id)) {
+          continue;
+        }
+
+        seen.add(ticket.ticket_id);
+        unique.push(ticket);
+      }
+
+      console.log(
+        "Parsed My Service Requests:",
+        unique.length,
+        unique
+      );
+
+      return unique;
+    }
+
+
+    function updateTicketSummary() {
+
+      const tickets =
+        myTickets || [];
+
+      const count =
+        status =>
+          tickets.filter(
+            ticket =>
+              (ticket.status || "OPEN")
+                .toUpperCase() ===
+              status
+          ).length;
+
+
+      const total =
+        document.getElementById(
+          "ticketTotal"
+        );
+
+      const open =
+        document.getElementById(
+          "ticketOpen"
+        );
+
+      const progress =
+        document.getElementById(
+          "ticketProgress"
+        );
+
+      const resolved =
+        document.getElementById(
+          "ticketResolved"
+        );
+
+      const closed =
+        document.getElementById(
+          "ticketClosed"
+        );
+
+
+      if (total) {
+
+        total.textContent =
+          tickets.length;
+
+      }
+
+
+      if (open) {
+
+        open.textContent =
+          count("OPEN") +
+          count("REOPENED");
+
+      }
+
+
+      if (progress) {
+
+        progress.textContent =
+          count("IN_PROGRESS") +
+          count("ASSIGNED") +
+          count("PENDING_VENDOR");
+
+      }
+
+
+      if (resolved) {
+
+        resolved.textContent =
+          count("RESOLVED");
+
+      }
+
+
+      if (closed) {
+
+        closed.textContent =
+          count("CLOSED");
+
+      }
+
+    }
+
+
+    /* =========================================================
+       GLOBAL NOTIFICATION BELL
+       Direct Firestore endpoint — no Gemini call
+       ========================================================= */
+
+    let latestGlobalNotification = null;
+
+
+    async function loadGlobalNotification() {
+
+      const content =
+        document.getElementById(
+          "globalNotificationContent"
+        );
+
+      const badge =
+        document.getElementById(
+          "notificationBadge"
+        );
+
+      if (!content) {
+        return;
+      }
+
+      try {
+
+        const response =
+          await fetch(
+            `${API_BASE}/api/notifications/latest`,
+            {
+              method: "GET",
+              headers: {
+                "Accept": "application/json"
+              }
+            }
+          );
+
+        if (!response.ok) {
+          throw new Error(
+            `Notification request failed (${response.status}).`
+          );
+        }
+
+        const data =
+          await response.json();
+
+        if (
+          !data ||
+          data.success !== true
+        ) {
+          throw new Error(
+            data?.error ||
+            "Unable to retrieve notification."
+          );
+        }
+
+        latestGlobalNotification =
+          data.notification || null;
+
+        if (!latestGlobalNotification) {
+
+          if (badge) {
+            badge.classList.add("hidden");
+          }
+
+          content.innerHTML = `
+            <div class="notification-popover-empty">
+              No FM Genie notifications have been recorded yet.
+            </div>
+          `;
+
+          return;
+        }
+
+        if (badge) {
+          badge.textContent = "1";
+          badge.classList.remove("hidden");
+        }
+
+        renderGlobalNotification();
+
+      } catch (error) {
+
+        latestGlobalNotification = null;
+
+        if (badge) {
+          badge.classList.add("hidden");
+        }
+
+        content.innerHTML = `
+          <div class="notification-popover-empty">
+            Unable to load the latest FM Genie update.
+          </div>
+        `;
+
+        console.error(
+          "Global notification error:",
+          error
+        );
+
+      }
+
+    }
+
+
+    function renderGlobalNotification() {
+
+      const content =
+        document.getElementById(
+          "globalNotificationContent"
+        );
+
+      if (
+        !content ||
+        !latestGlobalNotification
+      ) {
+        return;
+      }
+
+      const notification =
+        latestGlobalNotification;
+
+      content.innerHTML = `
+
+        <div class="notification-popover-type">
+          ${escapeHtml(
+            notification.notification_type ||
+            "FM GENIE UPDATE"
+          )}
+        </div>
+
+        <div class="notification-popover-ticket">
+          ${escapeHtml(
+            notification.ticket_id ||
+            "FM Ticket"
+          )}
+        </div>
+
+        <div class="notification-popover-message">
+          ${escapeHtml(
+            notification.message ||
+            "FM Genie generated an update for this service request."
+          )}
+        </div>
+
+        <div class="notification-popover-meta">
+
+          Recipient:
+          ${escapeHtml(
+            notification.recipient ||
+            "-"
+          )}
+
+          <br>
+
+          ${escapeHtml(
+            formatTicketDate(
+              notification.created_at
+            ) || "-"
+          )}
+
+          <br>
+
+          <span class="notification-popover-status">
+            ${escapeHtml(
+              notification.status ||
+              "PENDING"
+            )}
+          </span>
+
+        </div>
+
+      `;
+
+    }
+
+
+    function toggleGlobalNotification(
+      event
+    ) {
+
+      if (event) {
+        event.stopPropagation();
+      }
+
+      const popover =
+        document.getElementById(
+          "notificationPopover"
+        );
+
+      if (!popover) {
+        return;
+      }
+
+      popover.classList.toggle("open");
+
+      if (
+        popover.classList.contains("open")
+      ) {
+        loadGlobalNotification();
+      }
+
+    }
+
+
+    document.addEventListener(
+      "click",
+      function(event) {
+
+        const wrapper =
+          document.querySelector(
+            ".notification-wrapper"
+          );
+
+        const popover =
+          document.getElementById(
+            "notificationPopover"
+          );
+
+        if (
+          wrapper &&
+          popover &&
+          !wrapper.contains(event.target)
+        ) {
+          popover.classList.remove("open");
+        }
+
       }
     );
 
-    if (!response.ok) {
-      throw new Error("FM Genie could not process the request.");
-    }
 
-    const events = await response.json();
 
-    displayResponse(events);
+    function showHome() {
 
-  } catch (err) {
+      const home =
+        document.getElementById("homeContent");
 
-    error.textContent = err.message;
-    error.style.display = "block";
+      const tickets =
+        document.getElementById("ticketsPage");
 
-  } finally {
+      const dashboard =
+        document.getElementById("adminDashboardPage");
 
-    button.disabled = false;
-    button.textContent = "Create Service Request";
+      const homeNav =
+        document.getElementById("homeNav");
 
-  }
-}
+      const ticketsNav =
+        document.getElementById("ticketsNav");
 
-function displayResponse(events) {
+      const dashboardNav =
+        document.getElementById("adminDashboardNav");
 
-  let ticket = null;
+      if (home) {
+        home.style.display = "block";
+      }
 
-  for (const event of events) {
+      if (tickets) {
+        tickets.style.display = "none";
+      }
 
-    const parts = event.content?.parts || [];
+      if (dashboard) {
+        dashboard.style.display = "none";
+      }
 
-    for (const part of parts) {
+      if (homeNav) {
+        homeNav.classList.add("active");
+      }
 
-      if (
-        part.functionResponse &&
-        part.functionResponse.name === "create_ticket"
-      ) {
-        ticket = part.functionResponse.response;
+      if (ticketsNav) {
+        ticketsNav.classList.remove("active");
+      }
+
+      if (dashboardNav) {
+        dashboardNav.classList.remove("active");
       }
 
     }
-  }
 
-  if (!ticket || !ticket.success) {
 
-    document.getElementById("error").textContent =
-      "The agent responded, but no ticket information was returned.";
 
-    document.getElementById("error").style.display = "block";
+    /* ==========================================================
+       ADMIN DASHBOARD
+       Direct Firestore API
+       ========================================================== */
 
-    return;
-  }
+    function showAdminDashboard() {
 
-  document.getElementById("ticketId").textContent =
-    "Ticket " + ticket.ticket_id;
+      const home =
+        document.getElementById("homeContent");
 
-  document.getElementById("status").textContent =
-    ticket.status || "-";
+      const tickets =
+        document.getElementById("ticketsPage");
 
-  document.getElementById("category").textContent =
-    ticket.category || "-";
+      const dashboard =
+        document.getElementById("adminDashboardPage");
 
-  document.getElementById("priority").textContent =
-    ticket.priority || "-";
+      const homeNav =
+        document.getElementById("homeNav");
 
-  document.getElementById("sla").textContent =
-    ticket.sla || "-";
+      const ticketsNav =
+        document.getElementById("ticketsNav");
 
-  document.getElementById("location").textContent =
-    ticket.location || "-";
+      const dashboardNav =
+        document.getElementById(
+          "adminDashboardNav"
+        );
 
-  document.getElementById("team").textContent =
-    ticket.responsible_team || "Pending Assignment";
+      if (home) {
+        home.style.display = "none";
+      }
 
-  document.getElementById("result").classList.add("show");
-}
+      if (tickets) {
+        tickets.style.display = "none";
+      }
 
-</script>
+      if (dashboard) {
+        dashboard.style.display = "block";
+      }
+
+      if (homeNav) {
+        homeNav.classList.remove("active");
+      }
+
+      if (ticketsNav) {
+        ticketsNav.classList.remove("active");
+      }
+
+      if (dashboardNav) {
+        dashboardNav.classList.add("active");
+      }
+
+      loadAdminDashboard();
+
+    }
+
+
+    async function loadAdminDashboard() {
+
+      const container =
+        document.getElementById(
+          "adminDashboardContent"
+        );
+
+      if (!container) {
+        return;
+      }
+
+      container.className =
+        "dashboard-loading";
+
+      container.innerHTML =
+        "Loading live FM dashboard data...";
+
+      try {
+
+        /*
+         * IMPORTANT:
+         *
+         * This request goes directly to our Flask
+         * dashboard endpoint.
+         *
+         * It does NOT call Gemini or /api/run.
+         */
+
+        const response =
+          await fetch(
+            `${API_BASE}/api/dashboard`,
+            {
+              method: "GET",
+              headers: {
+                "Accept":
+                  "application/json"
+              }
+            }
+          );
+
+        if (!response.ok) {
+
+          throw new Error(
+            `Dashboard request failed (${response.status}).`
+          );
+
+        }
+
+        const data =
+          await response.json();
+
+        if (
+          !data ||
+          data.success !== true
+        ) {
+
+          throw new Error(
+            data?.error ||
+            "FM dashboard returned an invalid response."
+          );
+
+        }
+
+        renderAdminDashboard(data);
+
+      } catch (error) {
+
+        console.error(
+          "FM Genie Admin Dashboard error:",
+          error
+        );
+
+        container.className =
+          "dashboard-error";
+
+        container.innerHTML = `
+          <strong>
+            Unable to load Admin Dashboard
+          </strong>
+
+          <div style="margin-top:7px;">
+            ${escapeHtml(
+              error.message ||
+              "Please try again."
+            )}
+          </div>
+
+          <button
+            type="button"
+            class="dashboard-refresh"
+            style="margin-top:14px;"
+            onclick="loadAdminDashboard()"
+          >
+            Retry
+          </button>
+        `;
+
+      }
+
+    }
+
+
+    function renderAdminDashboard(data) {
+
+      const container =
+        document.getElementById(
+          "adminDashboardContent"
+        );
+
+      if (!container) {
+        return;
+      }
+
+      const status =
+        data.status_counts || {};
+
+      const sla =
+        data.sla_summary || {};
+
+      const categories =
+        data.category_counts || {};
+
+      const teams =
+        data.team_workload || {};
+
+
+      function dashboardRows(
+        object
+      ) {
+
+        const entries =
+          Object.entries(
+            object || {}
+          );
+
+        if (!entries.length) {
+
+          return `
+            <div class="dashboard-row">
+              <span class="dashboard-row-label">
+                No data
+              </span>
+              <span class="dashboard-row-value">
+                0
+              </span>
+            </div>
+          `;
+
+        }
+
+        return entries
+          .sort(
+            (a, b) =>
+              Number(b[1]) -
+              Number(a[1])
+          )
+          .map(
+            ([label, value]) => `
+              <div class="dashboard-row">
+
+                <span class="dashboard-row-label">
+                  ${escapeHtml(
+                    String(label)
+                  )}
+                </span>
+
+                <span class="dashboard-row-value">
+                  ${escapeHtml(
+                    String(value)
+                  )}
+                </span>
+
+              </div>
+            `
+          )
+          .join("");
+
+      }
+
+
+      container.className =
+        "admin-dashboard";
+
+
+      container.innerHTML = `
+
+        <div class="dashboard-kpis">
+
+          <div class="dashboard-kpi">
+            <div class="dashboard-kpi-label">
+              Total Tickets
+            </div>
+            <div class="dashboard-kpi-value">
+              ${Number(
+                data.total_tickets || 0
+              )}
+            </div>
+          </div>
+
+
+          <div class="dashboard-kpi">
+            <div class="dashboard-kpi-label">
+              Active Tickets
+            </div>
+            <div class="dashboard-kpi-value">
+              ${Number(
+                data.active_tickets || 0
+              )}
+            </div>
+          </div>
+
+
+          <div class="dashboard-kpi">
+            <div class="dashboard-kpi-label">
+              Open
+            </div>
+            <div class="dashboard-kpi-value">
+              ${Number(
+                status.OPEN || 0
+              )}
+            </div>
+          </div>
+
+
+          <div class="dashboard-kpi">
+            <div class="dashboard-kpi-label">
+              In Progress
+            </div>
+            <div class="dashboard-kpi-value">
+              ${Number(
+                status.IN_PROGRESS || 0
+              )}
+            </div>
+          </div>
+
+
+          <div class="dashboard-kpi">
+            <div class="dashboard-kpi-label">
+              Reopened
+            </div>
+            <div class="dashboard-kpi-value">
+              ${Number(
+                status.REOPENED || 0
+              )}
+            </div>
+          </div>
+
+
+          <div class="dashboard-kpi">
+            <div class="dashboard-kpi-label">
+              Resolved
+            </div>
+            <div class="dashboard-kpi-value">
+              ${Number(
+                status.RESOLVED || 0
+              )}
+            </div>
+          </div>
+
+
+          <div class="dashboard-kpi">
+            <div class="dashboard-kpi-label">
+              Closed
+            </div>
+            <div class="dashboard-kpi-value">
+              ${Number(
+                status.CLOSED || 0
+              )}
+            </div>
+          </div>
+
+
+          <div class="dashboard-kpi">
+            <div class="dashboard-kpi-label">
+              SLA Breached
+            </div>
+            <div class="dashboard-kpi-value">
+              ${Number(
+                sla.sla_breached || 0
+              )}
+            </div>
+          </div>
+
+
+          <div class="dashboard-kpi">
+            <div class="dashboard-kpi-label">
+              SLA Approaching
+            </div>
+            <div class="dashboard-kpi-value">
+              ${Number(
+                sla.sla_approaching || 0
+              )}
+            </div>
+          </div>
+
+
+          <div class="dashboard-kpi">
+            <div class="dashboard-kpi-label">
+              Safety Critical
+            </div>
+            <div class="dashboard-kpi-value">
+              ${Number(
+                sla.safety_critical || 0
+              )}
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="dashboard-grid">
+
+          <div class="dashboard-panel">
+
+            <div class="dashboard-panel-title">
+              Tickets by Status
+            </div>
+
+            ${dashboardRows({
+              "Open":
+                status.OPEN || 0,
+
+              "Assigned":
+                status.ASSIGNED || 0,
+
+              "In Progress":
+                status.IN_PROGRESS || 0,
+
+              "Pending Vendor":
+                status.PENDING_VENDOR || 0,
+
+              "Reopened":
+                status.REOPENED || 0,
+
+              "Resolved":
+                status.RESOLVED || 0,
+
+              "Closed":
+                status.CLOSED || 0
+            })}
+
+          </div>
+
+
+          <div class="dashboard-panel">
+
+            <div class="dashboard-panel-title">
+              SLA Overview
+            </div>
+
+            ${dashboardRows({
+              "SLA Breached":
+                sla.sla_breached || 0,
+
+              "SLA Approaching":
+                sla.sla_approaching || 0,
+
+              "SLA On Track":
+                sla.sla_on_track || 0,
+
+              "No SLA":
+                sla.no_sla || 0,
+
+              "Safety Critical":
+                sla.safety_critical || 0
+            })}
+
+          </div>
+
+        </div>
+
+
+        <div class="dashboard-grid">
+
+          <div class="dashboard-panel">
+
+            <div class="dashboard-panel-title">
+              Tickets by Category
+            </div>
+
+            ${dashboardRows(
+              categories
+            )}
+
+          </div>
+
+
+          <div class="dashboard-panel">
+
+            <div class="dashboard-panel-title">
+              Team Workload
+            </div>
+
+            ${dashboardRows(
+              teams
+            )}
+
+          </div>
+
+        </div>
+
+
+        <div class="dashboard-generated">
+          Live data generated:
+          ${escapeHtml(
+            formatTicketDate(
+              data.generated_at
+            )
+          )}
+        </div>
+
+      `;
+
+    }
+
+
+    function showMyTickets() {
+
+      const home =
+        document.getElementById("homeContent");
+
+      const tickets =
+        document.getElementById("ticketsPage");
+
+      const dashboard =
+        document.getElementById("adminDashboardPage");
+
+      const homeNav =
+        document.getElementById("homeNav");
+
+      const ticketsNav =
+        document.getElementById("ticketsNav");
+
+      const dashboardNav =
+        document.getElementById("adminDashboardNav");
+
+      if (home) {
+        home.style.display = "none";
+      }
+
+      if (tickets) {
+        tickets.style.display = "block";
+      }
+
+      if (dashboard) {
+        dashboard.style.display = "none";
+      }
+
+      if (homeNav) {
+        homeNav.classList.remove("active");
+      }
+
+      if (ticketsNav) {
+        ticketsNav.classList.add("active");
+      }
+
+      if (dashboardNav) {
+        dashboardNav.classList.remove("active");
+      }
+
+
+      currentTicketFilter =
+        "ALL";
+
+
+      document
+        .querySelectorAll(".filter-btn")
+        .forEach(
+          button =>
+            button.classList.remove("active")
+        );
+
+
+      const firstFilter =
+        document.querySelector(
+          ".filter-btn"
+        );
+
+      if (firstFilter) {
+
+        firstFilter.classList.add(
+          "active"
+        );
+
+      }
+
+
+      fetchMyTickets();
+
+    }
+
+
+    function filterTickets(
+      status,
+      button
+    ) {
+
+      currentTicketFilter =
+        status;
+
+
+      document
+        .querySelectorAll(".filter-btn")
+        .forEach(
+          item =>
+            item.classList.remove("active")
+        );
+
+
+      if (button) {
+
+        button.classList.add(
+          "active"
+        );
+
+      }
+
+
+      renderTickets();
+
+    }
+
+
+    function statusClass(status) {
+
+      switch (
+        (status || "OPEN")
+          .toUpperCase()
+      ) {
+
+        case "IN_PROGRESS":
+
+        case "ASSIGNED":
+
+        case "PENDING_VENDOR":
+
+          return "progress";
+
+
+        case "RESOLVED":
+
+        case "REOPENED":
+
+          return "resolved";
+
+
+        case "CLOSED":
+
+          return "closed";
+
+
+        default:
+
+          return "open";
+
+      }
+
+    }
+
+
+    function statusLabel(status) {
+
+      return (
+        status || "OPEN"
+      )
+        .replaceAll(
+          "_",
+          " "
+        );
+
+    }
+
+
+    function assignmentLabel(ticket) {
+
+      if (
+        ticket.responsible_team &&
+        ticket.responsible_team.trim()
+      ) {
+
+        return ticket
+          .responsible_team
+          .trim();
+
+      }
+
+      return "Unassigned";
+
+    }
+
+
+    function formatTicketDate(value) {
+
+      if (!value) {
+        return "";
+      }
+
+      try {
+
+        const date =
+          new Date(value);
+
+        if (
+          Number.isNaN(
+            date.getTime()
+          )
+        ) {
+
+          return String(value);
+
+        }
+
+        return date.toLocaleString(
+          undefined,
+          {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+          }
+        );
+
+      } catch (error) {
+
+        return String(value);
+
+      }
+
+    }
+
+
+    function renderTickets() {
+
+      const container =
+        document.getElementById(
+          "ticketList"
+        );
+
+
+      if (!container) {
+        return;
+      }
+
+
+      let tickets =
+        myTickets || [];
+
+
+      if (
+        currentTicketFilter !==
+        "ALL"
+      ) {
+
+        tickets =
+          tickets.filter(
+            ticket =>
+              (
+                ticket.status ||
+                "OPEN"
+              ).toUpperCase() ===
+              currentTicketFilter
+          );
+
+      }
+
+
+      if (!tickets.length) {
+
+        container.innerHTML = `
+
+          <div class="empty-tickets">
+
+            <div class="empty-tickets-icon">
+              🎫
+            </div>
+
+            <div class="empty-tickets-title">
+              ${
+                ticketsLoaded
+                  ? "No service requests found"
+                  : "No service requests loaded"
+              }
+            </div>
+
+            <div>
+              ${
+                ticketsLoaded
+                  ? "No service requests were found for the current requester."
+                  : "FM Genie will retrieve your requests from Firestore."
+              }
+            </div>
+
+          </div>
+
+        `;
+
+        updateTicketSummary();
+
+        return;
+
+      }
+
+
+      container.innerHTML =
+        tickets.map(
+          ticket => `
+
+            <div
+              class="ticket-card"
+              onclick="showTicketDetail('${escapeHtml(ticket.ticket_id)}')"
+            >
+
+              <div class="ticket-card-header">
+
+                <div>
+
+                  <div class="ticket-number">
+                    ${escapeHtml(
+                      ticket.ticket_id
+                    )}
+                  </div>
+
+                  <div class="ticket-description">
+                    ${escapeHtml(
+                      ticket.issue_description
+                    )}
+                  </div>
+
+                </div>
+
+
+                <div
+                  class="ticket-status ${statusClass(ticket.status)}"
+                >
+                  ${escapeHtml(
+                    statusLabel(
+                      ticket.status
+                    )
+                  )}
+                </div>
+
+              </div>
+
+
+              <div class="ticket-meta">
+
+                <div class="ticket-tag">
+                  Category:
+                  ${escapeHtml(
+                    ticket.category || "-"
+                  )}
+                </div>
+
+                <div class="ticket-tag">
+                  Priority:
+                  ${escapeHtml(
+                    ticket.priority || "-"
+                  )}
+                </div>
+
+                <div class="ticket-tag">
+                  SLA:
+                  ${escapeHtml(
+                    ticket.sla || "-"
+                  )}
+                </div>
+
+                <div class="ticket-tag">
+                  Location:
+                  ${escapeHtml(
+                    ticket.location || "-"
+                  )}
+                </div>
+
+                <div class="ticket-tag">
+                  Assignment:
+                  ${escapeHtml(
+                    assignmentLabel(ticket)
+                  )}
+                </div>
+
+                ${
+                  ticket.updated_at
+                    ? `
+                      <div class="ticket-tag">
+                        Updated:
+                        ${escapeHtml(
+                          formatTicketDate(
+                            ticket.updated_at
+                          )
+                        )}
+                      </div>
+                    `
+                    : ""
+                }
+
+              </div>
+
+            </div>
+
+          `
+        ).join("");
+
+
+      updateTicketSummary();
+
+    }
+
+
+    function showTicketDetail(
+      ticketId
+    ) {
+
+      const ticket =
+        (myTickets || [])
+          .find(
+            item =>
+              item.ticket_id ===
+              ticketId
+          );
+
+
+      if (!ticket) {
+        return;
+      }
+
+
+      const container =
+        document.getElementById(
+          "ticketList"
+        );
+
+
+      if (!container) {
+        return;
+      }
+
+
+      container.innerHTML = `
+
+        <div class="ticket-detail">
+
+          <button
+            type="button"
+            class="back-button"
+            onclick="renderTickets()"
+          >
+            ← Back to My Service Requests
+          </button>
+
+
+          <div class="ticket-card-header">
+
+            <div>
+
+              <div class="ticket-number">
+                ${escapeHtml(
+                  ticket.ticket_id
+                )}
+              </div>
+
+              <div class="ticket-description">
+                ${escapeHtml(
+                  ticket.issue_description
+                )}
+              </div>
+
+            </div>
+
+
+            <div
+              class="ticket-status ${statusClass(ticket.status)}"
+            >
+              ${escapeHtml(
+                statusLabel(
+                  ticket.status
+                )
+              )}
+            </div>
+
+          </div>
+
+
+          <div class="ticket-detail-grid">
+
+            <div class="item">
+              <div class="label">Category</div>
+              <div class="value">
+                ${escapeHtml(
+                  ticket.category || "-"
+                )}
+              </div>
+            </div>
+
+
+            <div class="item">
+              <div class="label">Priority</div>
+              <div class="value">
+                ${escapeHtml(
+                  ticket.priority || "-"
+                )}
+              </div>
+            </div>
+
+
+            <div class="item">
+              <div class="label">SLA</div>
+              <div class="value">
+                ${escapeHtml(
+                  ticket.sla || "-"
+                )}
+              </div>
+            </div>
+
+
+            <div class="item">
+              <div class="label">Location</div>
+              <div class="value">
+                ${escapeHtml(
+                  ticket.location || "-"
+                )}
+              </div>
+            </div>
+
+
+            <div class="item">
+              <div class="label">Responsible Team</div>
+              <div class="value">
+                ${escapeHtml(
+                  assignmentLabel(ticket)
+                )}
+              </div>
+            </div>
+
+
+            <div class="item">
+              <div class="label">Ticket Status</div>
+              <div class="value">
+                ${escapeHtml(
+                  statusLabel(
+                    ticket.status
+                  )
+                )}
+              </div>
+            </div>
+
+
+            <div class="item">
+              <div class="label">Created</div>
+              <div class="value">
+                ${escapeHtml(
+                  formatTicketDate(
+                    ticket.created_at
+                  ) || "-"
+                )}
+              </div>
+            </div>
+
+
+            <div class="item">
+              <div class="label">Last Updated</div>
+              <div class="value">
+                ${escapeHtml(
+                  formatTicketDate(
+                    ticket.updated_at
+                  ) || "-"
+                )}
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="detail-note">
+
+            FM Genie retrieved this service request
+            from the live facilities management system.
+
+            ${
+              assignmentLabel(ticket) ===
+              "Unassigned"
+
+                ? " Assignment is currently pending."
+
+                : " The request has been routed to the responsible team."
+            }
+
+          </div>
+
+
+          <div class="ticket-history">
+
+            <div class="ticket-history-title">
+              🔔 Notification & Activity History
+            </div>
+
+            <div class="ticket-history-subtitle">
+              Updates generated by FM Genie for this service request.
+            </div>
+
+            <div
+              id="ticketHistory"
+              class="history-loading"
+            >
+              Loading ticket history...
+            </div>
+
+          </div>
+
+        </div>
+
+      `;
+
+
+      loadTicketNotificationHistory(
+        ticket.ticket_id
+      );
+
+    }
+
+
+    async function loadTicketNotificationHistory(
+      ticketId
+    ) {
+
+      const history =
+        document.getElementById(
+          "ticketHistory"
+        );
+
+
+      if (!history) {
+        return;
+      }
+
+
+      history.innerHTML =
+        "Loading ticket history...";
+
+
+      try {
+
+        /*
+         * Use a fresh session for every ticket-history request.
+         *
+         * This prevents the history request from depending on
+         * the main chat session or a previous conversation.
+         */
+
+        const sessionResponse =
+          await fetch(
+            `${API_BASE}/api/apps/${APP_NAME}/users/${USER_ID}/sessions`,
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json"
+              },
+
+              body: "{}"
+            }
+          );
+
+
+        if (!sessionResponse.ok) {
+
+          throw new Error(
+            "Unable to create ticket history session."
+          );
+
+        }
+
+
+        const historySession =
+          await sessionResponse.json();
+
+
+        const historySessionId =
+          historySession.id ||
+          historySession.sessionId ||
+          historySession.session_id;
+
+
+        if (!historySessionId) {
+
+          throw new Error(
+            "FM Genie did not return a valid history session."
+          );
+
+        }
+
+
+        const response =
+          await fetch(
+            `${API_BASE}/api/run`,
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json"
+              },
+
+              body: JSON.stringify({
+
+                appName:
+                  APP_NAME,
+
+                userId:
+                  USER_ID,
+
+                sessionId:
+                  historySessionId,
+
+                newMessage: {
+
+                  role:
+                    "user",
+
+                  parts: [
+                    {
+                      text:
+                        `Show notification history for ticket ${ticketId}. ` +
+                        `Use get_ticket_notifications for this ticket. ` +
+                        `Return the actual notification records.`
+                    }
+                  ]
+
+                }
+
+              })
+
+            }
+          );
+
+
+        if (!response.ok) {
+          throw new Error(
+            "Unable to retrieve ticket history."
+          );
+        }
+
+
+        const events =
+          await response.json();
+
+
+        let notifications = [];
+
+
+        function collectNotifications(
+          value
+        ) {
+
+          if (!value) {
+            return;
+          }
+
+
+          if (Array.isArray(value)) {
+
+            for (const item of value) {
+              collectNotifications(item);
+            }
+
+            return;
+          }
+
+
+          if (
+            typeof value !== "object"
+          ) {
+            return;
+          }
+
+
+          if (
+            Array.isArray(
+              value.notifications
+            )
+          ) {
+
+            notifications =
+              value.notifications;
+
+            return;
+          }
+
+
+          if (
+            value.functionResponse
+          ) {
+
+            collectNotifications(
+              value.functionResponse.response
+            );
+
+            collectNotifications(
+              value.functionResponse.result
+            );
+
+          }
+
+
+          if (value.data) {
+            collectNotifications(
+              value.data
+            );
+          }
+
+
+          if (value.content) {
+            collectNotifications(
+              value.content
+            );
+          }
+
+
+          if (value.parts) {
+
+            collectNotifications(
+              value.parts
+            );
+
+          }
+
+        }
+
+
+        collectNotifications(
+          events
+        );
+
+
+        if (!notifications.length) {
+
+          const finalText =
+            extractFinalText(
+              events
+            );
+
+
+          const lines =
+            finalText
+              ? finalText
+                  .split(/\r?\n/)
+                  .filter(
+                    line =>
+                      line.trim()
+                  )
+              : [];
+
+
+          if (lines.length) {
+
+            notifications =
+              [
+                {
+                  notification_id:
+                    "",
+                  ticket_id:
+                    ticketId,
+                  recipient:
+                    "",
+                  notification_type:
+                    "FM GENIE UPDATE",
+                  message:
+                    finalText,
+                  status:
+                    "",
+                  created_at:
+                    ""
+                }
+              ];
+
+          }
+
+        }
+
+
+        renderTicketNotificationHistory(
+          notifications,
+          ticketId
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "Ticket history error:",
+          error
+        );
+
+
+        history.innerHTML = `
+          <div class="history-error">
+            Unable to load ticket history.
+          </div>
+        `;
+
+      }
+
+    }
+
+
+    function renderTicketNotificationHistory(
+      notifications,
+      ticketId
+    ) {
+
+      const history =
+        document.getElementById(
+          "ticketHistory"
+        );
+
+
+      if (!history) {
+        return;
+      }
+
+
+      if (
+        !Array.isArray(
+          notifications
+        ) ||
+        !notifications.length
+      ) {
+
+        history.innerHTML = `
+          <div class="history-empty">
+            No notification or activity records found
+            for ${escapeHtml(ticketId)}.
+          </div>
+        `;
+
+        return;
+      }
+
+
+      const sorted =
+        [...notifications].sort(
+          (
+            a,
+            b
+          ) => {
+
+            const first =
+              new Date(
+                a.created_at || 0
+              ).getTime();
+
+            const second =
+              new Date(
+                b.created_at || 0
+              ).getTime();
+
+            return (
+              second -
+              first
+            );
+
+          }
+        );
+
+
+      history.className =
+        "ticket-history-list";
+
+
+      history.innerHTML =
+        sorted
+          .map(
+            notification => `
+
+              <div class="history-item">
+
+                <div class="history-time">
+                  ${escapeHtml(
+                    formatTicketDate(
+                      notification.created_at
+                    ) || "-"
+                  )}
+                </div>
+
+
+                <div class="history-content">
+
+                  <div class="history-type">
+                    ${escapeHtml(
+                      notification.notification_type ||
+                      "FM GENIE UPDATE"
+                    )}
+                  </div>
+
+
+                  <div class="history-message">
+                    ${escapeHtml(
+                      notification.message ||
+                      "FM Genie generated an update for this ticket."
+                    )}
+                  </div>
+
+
+                  ${
+                    notification.recipient
+                      ? `
+                        <div class="history-recipient">
+                          Recipient:
+                          ${escapeHtml(
+                            notification.recipient
+                          )}
+                        </div>
+                      `
+                      : ""
+                  }
+
+
+                  ${
+                    notification.status
+                      ? `
+                        <span class="history-status">
+                          ${escapeHtml(
+                            notification.status
+                          )}
+                        </span>
+                      `
+                      : ""
+                  }
+
+                </div>
+
+              </div>
+
+            `
+          )
+          .join("");
+
+    }
+
+
+    /*
+     * No localStorage is used for ticket retrieval anymore.
+     *
+     * initializeTicketHistory() is retained as a compatibility
+     * wrapper for the existing page lifecycle.
+     */
+
+    function initializeTicketHistory() {
+
+      updateTicketSummary();
+
+    }
+
+
+    initializeTicketHistory();
+
+
+    /* ==========================================================
+       CTRL + ENTER
+       ========================================================== */
+
+
+    document
+      .getElementById("issue")
+      .addEventListener(
+        "keydown",
+        function(event) {
+
+
+          if (
+
+            event.ctrlKey
+
+            &&
+
+            event.key ===
+              "Enter"
+
+          ) {
+
+
+            event.preventDefault();
+
+
+            submitIssue();
+
+          }
+
+        }
+      );
+
+
+  </script>
 
 </body>
+
 </html>
-EOF

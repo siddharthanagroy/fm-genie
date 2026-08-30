@@ -157,6 +157,24 @@ def create_ticket(
         sla_rule = get_sla(category, priority)
         sla = sla_rule["resolution"]
 
+        # -----------------------------------------------------
+        # DETERMINISTIC TEAM ROUTING
+        # -----------------------------------------------------
+        team_by_category = {
+            "HVAC": "HVAC Services",
+            "Plumbing": "Plumbing Services",
+            "Cafeteria": "Cafeteria Services",
+            "Electrical": "Electrical Services",
+            "Housekeeping": "Housekeeping Services",
+            "Furniture": "Carpentry Services",
+        }
+
+        if not responsible_team:
+            responsible_team = team_by_category.get(
+                category,
+                "",
+            )
+
     now = datetime.now(timezone.utc)
 
     sla_duration = _sla_to_timedelta(sla)
@@ -407,7 +425,12 @@ def update_ticket_status(
     # ---------------------------------------------------------
     # PREVENT DUPLICATE STATUS UPDATE
     # ---------------------------------------------------------
-    if current_status == normalized_status:
+    # Allow assignment/reassignment even when the lifecycle
+    # status remains unchanged.
+    if (
+        current_status == normalized_status
+        and not responsible_team.strip()
+    ):
         return {
             "success": False,
             "ticket_id": normalized_id,
@@ -445,6 +468,66 @@ def update_ticket_status(
     # CLOSED
     # ---------------------------------------------------------
     elif normalized_status == "CLOSED":
+        # Tickets must be RESOLVED before they can be CLOSED.
+        if current_status != "RESOLVED":
+            return {
+                "success": False,
+                "ticket_id": normalized_id,
+                "status": current_status,
+                "responsible_team": existing_ticket.get(
+                    "responsible_team"
+                ),
+                "message": (
+                    f"Ticket {normalized_id} cannot be closed "
+                    f"because it is currently {current_status}. "
+                    f"Tickets must be RESOLVED before closure."
+                ),
+            }
+
+        resolved_at = existing_ticket.get("resolved_at")
+
+        if not resolved_at:
+            return {
+                "success": False,
+                "ticket_id": normalized_id,
+                "status": current_status,
+                "responsible_team": existing_ticket.get(
+                    "responsible_team"
+                ),
+                "message": (
+                    f"Ticket {normalized_id} cannot be closed "
+                    f"because no resolution timestamp was found."
+                ),
+            }
+
+        if resolved_at.tzinfo is None:
+            resolved_at = resolved_at.replace(
+                tzinfo=timezone.utc
+            )
+
+        working_days_elapsed = _working_days_elapsed(
+            resolved_at,
+            now,
+        )
+
+        if working_days_elapsed < 2:
+            return {
+                "success": False,
+                "ticket_id": normalized_id,
+                "status": current_status,
+                "responsible_team": existing_ticket.get(
+                    "responsible_team"
+                ),
+                "resolved_at": resolved_at.isoformat(),
+                "working_days_elapsed": working_days_elapsed,
+                "message": (
+                    f"Ticket {normalized_id} cannot be closed yet. "
+                    f"It has been resolved for "
+                    f"{working_days_elapsed} working day(s). "
+                    f"Closure is allowed after 2 working days."
+                ),
+            }
+
         updates["closed_at"] = now
         updates["escalation_status"] = "RESOLVED"
 
@@ -684,4 +767,46 @@ def reopen_ticket(ticket_id: str) -> dict:
             f"Ticket {normalized_id} has been reopened "
             "within the 2-working-day window."
         ),
+    }
+
+
+def list_my_tickets(
+    requester: str = "Demo User",
+) -> dict:
+    """Return the user's service tickets from Firestore."""
+
+    documents = (
+        db.collection("tickets")
+        .where("requester", "==", requester)
+        .stream()
+    )
+
+    tickets = []
+
+    for document in documents:
+
+        ticket = document.to_dict()
+
+        ticket["document_id"] = document.id
+
+        for key, value in list(ticket.items()):
+
+            if hasattr(value, "isoformat"):
+                ticket[key] = value.isoformat()
+
+        tickets.append(ticket)
+
+    tickets.sort(
+        key=lambda ticket: ticket.get(
+            "created_at",
+            "",
+        ),
+        reverse=True,
+    )
+
+    return {
+        "success": True,
+        "requester": requester,
+        "total_tickets": len(tickets),
+        "tickets": tickets,
     }

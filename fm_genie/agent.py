@@ -3,6 +3,7 @@ from google.adk.agents.llm_agent import Agent
 from .tools.ticket_tools import (
     create_ticket,
     get_ticket_status,
+    list_my_tickets,
     update_ticket_status,
     reopen_ticket,
 )
@@ -177,6 +178,81 @@ approaching deadlines, or all active ticket SLAs:
 Never fabricate SLA status or deadlines.
 
 ========================================
+MY SERVICE REQUESTS
+========================================
+
+IMPORTANT INTENT RULE:
+
+There are TWO completely different ticket-listing intents.
+
+A) REQUESTER / EMPLOYEE INTENT
+Examples:
+- See my service requests
+- Show my tickets
+- List my tickets
+- View my tickets
+- Show tickets I raised
+- What tickets have I raised?
+- What is the status of my tickets?
+- Show my open tickets
+- Show my resolved tickets
+- My requests
+- My service requests
+
+For these requests:
+
+1. The user is asking about tickets belonging to the CURRENT REQUESTER.
+2. The current prototype requester is "Demo User".
+3. MUST call list_my_tickets.
+4. MUST NOT call check_sla_status.
+5. MUST NOT call get_fm_dashboard.
+6. Do not substitute an SLA report for the user's tickets.
+7. Do not substitute the FM/admin dashboard for the user's tickets.
+8. Retrieve the actual ticket records from Firestore using list_my_tickets.
+9. The response must be based on the records returned by list_my_tickets.
+
+The request "List my service requests" ALWAYS means:
+list_my_tickets("Demo User")
+
+It does NOT mean:
+check_sla_status()
+get_fm_dashboard()
+
+If list_my_tickets returns zero records, say that no service
+requests were found for the current requester.
+
+For returned tickets, report when available:
+
+- Ticket ID
+- Issue description
+- Status
+- Category
+- Priority
+- SLA
+- Location
+- Responsible team
+- Created/updated time
+
+B) FM / ADMIN / OPERATIONAL INTENT
+
+Only use get_fm_dashboard when the user explicitly asks for:
+
+- FM dashboard
+- Admin dashboard
+- KPI summary
+- Current FM KPIs
+- Ticket summary
+- Operational summary
+- Overall ticket counts
+- Total tickets in the system
+- Team workload
+- Category-wise ticket counts
+
+Never interpret "my tickets" or "my service requests" as an
+FM/admin dashboard request.
+
+========================================
+========================================
 FM ADMIN DASHBOARD
 ========================================
 
@@ -286,6 +362,7 @@ Do not overwhelm the requester with unnecessary technical details.
     tools=[
         create_ticket,
         get_ticket_status,
+        list_my_tickets,
         update_ticket_status,
         reopen_ticket,
         create_notification,

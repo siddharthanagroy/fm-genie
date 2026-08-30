@@ -1,27 +1,53 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FM Genie | Facilities Management</title>
+  <title>FM Genie | Intelligent Facilities Management</title>
+
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --navy: #172033;
+      --navy-light: #27344d;
+      --blue: #2563eb;
+      --blue-light: #eff6ff;
+      --green: #16803c;
+      --green-light: #ecfdf3;
+      --text: #172033;
+      --muted: #64748b;
+      --border: #e5e7eb;
+      --background: #f5f7fb;
+      --white: #ffffff;
+      --warning: #b45309;
+      --warning-bg: #fffbeb;
+    }
 
     body {
       margin: 0;
-      font-family: Inter, Arial, sans-serif;
-      background: #f5f7fb;
-      color: #172033;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Arial, sans-serif;
+      background: var(--background);
+      color: var(--text);
     }
+
+    /* ================= HEADER ================= */
 
     .header {
       height: 72px;
-      background: white;
-      border-bottom: 1px solid #e5e7eb;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 32px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
     }
 
     .brand {
@@ -29,27 +55,50 @@
       align-items: center;
       gap: 12px;
       font-size: 22px;
-      font-weight: 700;
+      font-weight: 750;
+      letter-spacing: -0.3px;
     }
 
     .logo {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
-      background: #172033;
+      width: 40px;
+      height: 40px;
+      border-radius: 11px;
+      background: var(--navy);
       color: white;
       display: grid;
       place-items: center;
+      font-size: 14px;
       font-weight: 800;
+      box-shadow: 0 4px 10px rgba(23, 32, 51, .15);
     }
 
-    .status {
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .system-status {
       font-size: 13px;
-      color: #16803c;
-      background: #ecfdf3;
+      color: var(--green);
+      background: var(--green-light);
       padding: 8px 14px;
       border-radius: 20px;
+      font-weight: 600;
     }
+
+    .profile {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* ================= LAYOUT ================= */
 
     .layout {
       display: flex;
@@ -58,9 +107,20 @@
 
     .sidebar {
       width: 230px;
-      background: #172033;
+      background: var(--navy);
       color: white;
       padding: 24px 14px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-title {
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 0 14px;
+      margin-bottom: 12px;
     }
 
     .nav {
@@ -69,236 +129,941 @@
       margin-bottom: 6px;
       cursor: pointer;
       color: #cbd5e1;
+      font-size: 14px;
+      transition: .2s ease;
     }
 
     .nav.active,
     .nav:hover {
-      background: #27344d;
+      background: var(--navy-light);
       color: white;
     }
 
+    .sidebar-footer {
+      margin-top: 35px;
+      padding: 15px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.06);
+      color: #cbd5e1;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .sidebar-footer strong {
+      display: block;
+      color: white;
+      margin-bottom: 4px;
+    }
+
+    /* ================= MAIN ================= */
+
     .main {
       flex: 1;
-      padding: 38px;
-      max-width: 1200px;
+      padding: 34px;
+      max-width: 1250px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* ================= WELCOME ================= */
+
+    .welcome {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 24px;
     }
 
     .welcome h1 {
-      margin: 0 0 8px;
+      margin: 0 0 7px;
       font-size: 30px;
+      line-height: 1.2;
+      letter-spacing: -0.7px;
     }
 
     .welcome p {
-      margin: 0 0 30px;
-      color: #64748b;
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
     }
+
+    .date-box {
+      text-align: right;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* ================= KPI CARDS ================= */
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+
+    .stat-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(15,23,42,.03);
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+
+    .stat-value {
+      font-size: 25px;
+      font-weight: 750;
+    }
+
+    .stat-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: #f1f5f9;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+    }
+
+    /* ================= HERO ================= */
+
+    .hero {
+      background: linear-gradient(135deg, #172033 0%, #27344d 100%);
+      border-radius: 20px;
+      padding: 34px;
+      color: white;
+      margin-bottom: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.08);
+      right: -70px;
+      top: -80px;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 6px 11px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .hero h2 {
+      margin: 0 0 10px;
+      font-size: 29px;
+      line-height: 1.2;
+      letter-spacing: -.6px;
+      max-width: 650px;
+    }
+
+    .hero p {
+      margin: 0;
+      color: #cbd5e1;
+      font-size: 14px;
+      line-height: 1.6;
+      max-width: 700px;
+    }
+
+    .capabilities {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    .capability {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.09);
+      padding: 9px 12px;
+      border-radius: 9px;
+      font-size: 12px;
+      color: #e2e8f0;
+    }
+
+    /* ================= REQUEST ================= */
 
     .request-card {
       background: white;
-      border-radius: 16px;
-      padding: 28px;
+      border-radius: 18px;
+      padding: 26px;
       box-shadow: 0 4px 20px rgba(15,23,42,.06);
-      border: 1px solid #e8ebf0;
+      border: 1px solid var(--border);
+    }
+
+    .request-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .genie-icon {
+      width: 43px;
+      height: 43px;
+      border-radius: 12px;
+      background: var(--blue-light);
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+    }
+
+    .request-header h3 {
+      margin: 0 0 3px;
+      font-size: 18px;
+    }
+
+    .request-header span {
+      color: var(--muted);
+      font-size: 13px;
     }
 
     textarea {
       width: 100%;
-      min-height: 130px;
+      min-height: 135px;
       resize: vertical;
       border: 1px solid #d7dce5;
-      border-radius: 12px;
+      border-radius: 13px;
       padding: 16px;
-      font-size: 16px;
+      font-family: inherit;
+      font-size: 15px;
+      line-height: 1.5;
       outline: none;
+      transition: .2s ease;
     }
 
     textarea:focus {
-      border-color: #64748b;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(37,99,235,.08);
+    }
+
+    .quick-label {
+      color: var(--muted);
+      font-size: 12px;
+      margin: 13px 0 8px;
+    }
+
+    .quick-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .quick-btn {
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      color: #475569;
+      padding: 8px 11px;
+      border-radius: 20px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .quick-btn:hover {
+      background: var(--blue-light);
+      border-color: #bfdbfe;
+      color: var(--blue);
     }
 
     .actions {
-      margin-top: 16px;
+      margin-top: 18px;
       display: flex;
       justify-content: flex-end;
     }
 
-    button {
+    button.submit {
       border: 0;
-      border-radius: 9px;
-      padding: 12px 22px;
-      font-size: 15px;
-      font-weight: 600;
+      border-radius: 10px;
+      padding: 13px 21px;
+      font-size: 14px;
+      font-weight: 650;
       cursor: pointer;
-      background: #172033;
+      background: var(--navy);
       color: white;
+      transition: .2s ease;
     }
 
-    button:disabled {
-      opacity: .5;
-      cursor: wait;
+    button.submit:hover {
+      background: #0f172a;
+      transform: translateY(-1px);
     }
+
+    button.submit:disabled {
+      opacity: .55;
+      cursor: wait;
+      transform: none;
+    }
+
+    /* ================= PROCESSING ================= */
+
+    .processing {
+      display: none;
+      margin-top: 18px;
+      padding: 15px;
+      border-radius: 11px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      font-size: 13px;
+      color: #475569;
+    }
+
+    .processing.show {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #cbd5e1;
+      border-top-color: var(--blue);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ================= RESULT ================= */
 
     .result {
       display: none;
       margin-top: 24px;
       background: #f8fafc;
-      border-radius: 12px;
-      padding: 20px;
-      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 21px;
+      border: 1px solid #dbe3ed;
     }
 
     .result.show {
       display: block;
     }
 
+    .success-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 17px;
+    }
+
+    .success-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--green-light);
+      display: grid;
+      place-items: center;
+      color: var(--green);
+      font-weight: 800;
+    }
+
     .ticket-id {
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 15px;
+      font-size: 19px;
+      font-weight: 750;
+      margin-bottom: 3px;
+    }
+
+    .success-text {
+      color: var(--green);
+      font-size: 12px;
     }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+      gap: 10px;
     }
 
     .item {
       background: white;
-      padding: 14px;
+      padding: 13px;
       border-radius: 9px;
-      border: 1px solid #e5e7eb;
+      border: 1px solid var(--border);
     }
 
     .label {
-      font-size: 12px;
-      color: #64748b;
+      font-size: 11px;
+      color: var(--muted);
       margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: .3px;
     }
 
     .value {
-      font-weight: 600;
+      font-size: 13px;
+      font-weight: 650;
     }
 
-    .recent {
-      margin-top: 28px;
-    }
-
-    .recent h2 {
-      font-size: 19px;
-    }
-
-    .hint {
-      color: #64748b;
-      font-size: 14px;
-    }
+    /* ================= ERROR ================= */
 
     .error {
       color: #b91c1c;
       background: #fef2f2;
+      border: 1px solid #fecaca;
       padding: 12px;
-      border-radius: 8px;
+      border-radius: 9px;
       margin-top: 15px;
       display: none;
+      font-size: 13px;
     }
 
-    @media(max-width: 800px) {
-      .sidebar { display: none; }
-      .main { padding: 20px; }
-      .grid { grid-template-columns: 1fr 1fr; }
+    /* ================= RECENT ================= */
+
+    .recent {
+      margin-top: 26px;
+    }
+
+    .recent-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .recent h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .view-all {
+      color: var(--blue);
+      font-size: 13px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .recent-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .recent-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ticket-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 9px;
+      background: #f1f5f9;
+      display: grid;
+      place-items: center;
+    }
+
+    .recent-title {
+      font-size: 13px;
+      font-weight: 650;
+      margin-bottom: 3px;
+    }
+
+    .recent-meta {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .badge {
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 650;
+    }
+
+    .badge.progress {
+      background: var(--warning-bg);
+      color: var(--warning);
+    }
+
+    .badge.resolved {
+      background: var(--green-light);
+      color: var(--green);
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media(max-width: 900px) {
+      .sidebar {
+        display: none;
+      }
+
+      .main {
+        padding: 24px 18px;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media(max-width: 600px) {
+      .header {
+        padding: 0 16px;
+      }
+
+      .system-status {
+        display: none;
+      }
+
+      .brand {
+        font-size: 19px;
+      }
+
+      .main {
+        padding: 20px 14px;
+      }
+
+      .welcome {
+        display: block;
+      }
+
+      .welcome h1 {
+        font-size: 25px;
+      }
+
+      .date-box {
+        text-align: left;
+        margin-top: 8px;
+      }
+
+      .stats {
+        gap: 8px;
+      }
+
+      .stat-card {
+        padding: 14px;
+      }
+
+      .stat-value {
+        font-size: 22px;
+      }
+
+      .hero {
+        padding: 24px 20px;
+      }
+
+      .hero h2 {
+        font-size: 24px;
+      }
+
+      .request-card {
+        padding: 19px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .recent-card {
+        align-items: flex-start;
+        gap: 10px;
+      }
     }
   </style>
+
 </head>
 
 <body>
 
 <header class="header">
+
   <div class="brand">
     <div class="logo">FM</div>
     <span>FM Genie</span>
   </div>
-  <div class="status">● System Operational</div>
+
+  <div class="header-right">
+    <div class="system-status">● System Operational</div>
+    <div class="profile">U</div>
+  </div>
+
 </header>
 
 <div class="layout">
 
   <aside class="sidebar">
-    <div class="nav active">🏠 Home</div>
-    <div class="nav">🎫 My Tickets</div>
-    <div class="nav">🔔 Notifications</div>
-    <div class="nav">📊 Admin Dashboard</div>
+
+```
+<div class="sidebar-title">Workspace</div>
+
+<div class="nav active">🏠 Home</div>
+<div class="nav">🎫 My Tickets</div>
+<div class="nav">🔔 Notifications</div>
+<div class="nav">📊 Admin Dashboard</div>
+
+<div class="sidebar-footer">
+  <strong>FM Genie AI</strong>
+  Intelligent facilities management from request to resolution.
+</div>
+```
+
   </aside>
 
   <main class="main">
 
-    <section class="welcome">
-      <h1>How can we help?</h1>
-      <p>Describe your facilities issue in your own words. FM Genie will take care of the rest.</p>
-    </section>
+```
+<!-- WELCOME -->
 
-    <section class="request-card">
+<section class="welcome">
 
-      <textarea id="issue"
-        placeholder="Example: The air conditioner is not cooling in Meeting Room B on the 3rd floor."></textarea>
+  <div>
+    <h1 id="greeting">Good Afternoon, User 👋</h1>
+    <p>
+      Welcome back. How can FM Genie help you today?
+    </p>
+  </div>
 
-      <div class="actions">
-        <button id="submitBtn" onclick="submitIssue()">
-          Create Service Request
-        </button>
-      </div>
+  <div class="date-box" id="currentDate"></div>
 
-      <div id="error" class="error"></div>
+</section>
 
-      <div id="result" class="result">
+
+<!-- USER STATS -->
+
+<section class="stats">
+
+  <div class="stat-card">
+    <div>
+      <div class="stat-label">Requests Raised</div>
+      <div class="stat-value">12</div>
+    </div>
+    <div class="stat-icon">🎫</div>
+  </div>
+
+  <div class="stat-card">
+    <div>
+      <div class="stat-label">In Progress</div>
+      <div class="stat-value">3</div>
+    </div>
+    <div class="stat-icon">⏳</div>
+  </div>
+
+  <div class="stat-card">
+    <div>
+      <div class="stat-label">Resolved</div>
+      <div class="stat-value">8</div>
+    </div>
+    <div class="stat-icon">✓</div>
+  </div>
+
+  <div class="stat-card">
+    <div>
+      <div class="stat-label">Reopened</div>
+      <div class="stat-value">1</div>
+    </div>
+    <div class="stat-icon">↻</div>
+  </div>
+
+</section>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+  <div class="hero-tag">AI-Powered Facilities Management</div>
+
+  <h2>
+    Your Facilities. Your Voice. One Intelligent Assistant.
+  </h2>
+
+  <p>
+    FM Genie understands your issue in natural language, creates the
+    right service request, categorizes it, routes it to the appropriate
+    team, monitors SLA and keeps you informed until resolution.
+  </p>
+
+  <div class="capabilities">
+
+    <div class="capability">🤖 Understands Issues</div>
+    <div class="capability">🎯 Auto Categorization</div>
+    <div class="capability">⚡ Smart Routing</div>
+    <div class="capability">⏱ SLA Monitoring</div>
+    <div class="capability">🔔 Automated Updates</div>
+
+  </div>
+
+</section>
+
+
+<!-- REQUEST -->
+
+<section class="request-card">
+
+  <div class="request-header">
+
+    <div class="genie-icon">✨</div>
+
+    <div>
+      <h3>What can FM Genie help you with?</h3>
+      <span>
+        Tell me what is happening. No forms. No technical terminology.
+      </span>
+    </div>
+
+  </div>
+
+
+  <textarea
+    id="issue"
+    placeholder="Example: The air conditioner is not cooling in Meeting Room B on the 3rd floor..."
+  ></textarea>
+
+
+  <div class="quick-label">
+    Or choose a common request
+  </div>
+
+  <div class="quick-actions">
+
+    <button class="quick-btn"
+      onclick="setIssue('The air conditioner is not working properly.')">
+      ❄️ Air Conditioning
+    </button>
+
+    <button class="quick-btn"
+      onclick="setIssue('There is an electrical or lighting issue.')">
+      💡 Electrical
+    </button>
+
+    <button class="quick-btn"
+      onclick="setIssue('There is a plumbing or water-related issue.')">
+      🚰 Plumbing
+    </button>
+
+    <button class="quick-btn"
+      onclick="setIssue('There is an issue with the cafeteria.')">
+      🍽️ Cafeteria
+    </button>
+
+    <button class="quick-btn"
+      onclick="setIssue('There is a housekeeping or cleanliness issue.')">
+      🧹 Housekeeping
+    </button>
+
+    <button class="quick-btn"
+      onclick="setIssue('There is an issue with furniture or a workstation.')">
+      🪑 Furniture
+    </button>
+
+  </div>
+
+
+  <div class="actions">
+
+    <button
+      class="submit"
+      id="submitBtn"
+      onclick="submitIssue()">
+      ➤ Send to FM Genie
+    </button>
+
+  </div>
+
+
+  <div id="processing" class="processing">
+
+    <div class="spinner"></div>
+
+    <span id="processingText">
+      FM Genie is understanding your request...
+    </span>
+
+  </div>
+
+
+  <div id="error" class="error"></div>
+
+
+  <!-- RESULT -->
+
+  <div id="result" class="result">
+
+    <div class="success-header">
+
+      <div class="success-icon">✓</div>
+
+      <div>
         <div class="ticket-id" id="ticketId"></div>
-
-        <div class="grid">
-          <div class="item">
-            <div class="label">Status</div>
-            <div class="value" id="status"></div>
-          </div>
-
-          <div class="item">
-            <div class="label">Category</div>
-            <div class="value" id="category"></div>
-          </div>
-
-          <div class="item">
-            <div class="label">Priority</div>
-            <div class="value" id="priority"></div>
-          </div>
-
-          <div class="item">
-            <div class="label">SLA</div>
-            <div class="value" id="sla"></div>
-          </div>
-
-          <div class="item">
-            <div class="label">Location</div>
-            <div class="value" id="location"></div>
-          </div>
-
-          <div class="item">
-            <div class="label">Responsible Team</div>
-            <div class="value" id="team"></div>
-          </div>
+        <div class="success-text">
+          Service request created successfully
         </div>
       </div>
 
-    </section>
+    </div>
 
-    <section class="recent">
-      <h2>FM Genie</h2>
-      <p class="hint">
-        AI-powered facilities management — ticket creation, SLA monitoring,
-        notifications and escalation.
-      </p>
-    </section>
+
+    <div class="grid">
+
+      <div class="item">
+        <div class="label">Status</div>
+        <div class="value" id="status"></div>
+      </div>
+
+      <div class="item">
+        <div class="label">Category</div>
+        <div class="value" id="category"></div>
+      </div>
+
+      <div class="item">
+        <div class="label">Priority</div>
+        <div class="value" id="priority"></div>
+      </div>
+
+      <div class="item">
+        <div class="label">SLA</div>
+        <div class="value" id="sla"></div>
+      </div>
+
+      <div class="item">
+        <div class="label">Location</div>
+        <div class="value" id="location"></div>
+      </div>
+
+      <div class="item">
+        <div class="label">Responsible Team</div>
+        <div class="value" id="team"></div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- RECENT REQUESTS -->
+
+<section class="recent">
+
+  <div class="recent-header">
+
+    <h2>My Recent Requests</h2>
+
+    <div class="view-all">
+      View All →
+    </div>
+
+  </div>
+
+
+  <div class="recent-card">
+
+    <div class="recent-left">
+
+      <div class="ticket-icon">❄️</div>
+
+      <div>
+        <div class="recent-title">
+          AC not cooling — Meeting Room B
+        </div>
+        <div class="recent-meta">
+          FM-1024 · Updated 20 minutes ago
+        </div>
+      </div>
+
+    </div>
+
+    <div class="badge progress">
+      In Progress
+    </div>
+
+  </div>
+
+
+  <div class="recent-card">
+
+    <div class="recent-left">
+
+      <div class="ticket-icon">🍽️</div>
+
+      <div>
+        <div class="recent-title">
+          Cafeteria water issue
+        </div>
+        <div class="recent-meta">
+          FM-1021 · Updated yesterday
+        </div>
+      </div>
+
+    </div>
+
+    <div class="badge resolved">
+      Resolved
+    </div>
+
+  </div>
+
+
+  <div class="recent-card">
+
+    <div class="recent-left">
+
+      <div class="ticket-icon">💡</div>
+
+      <div>
+        <div class="recent-title">
+          Meeting room lighting issue
+        </div>
+        <div class="recent-meta">
+          FM-1017 · Updated 2 days ago
+        </div>
+      </div>
+
+    </div>
+
+    <div class="badge resolved">
+      Closed
+    </div>
+
+  </div>
+
+</section>
+```
 
   </main>
+
 </div>
 
 <script>
+
+/* =========================================================
+   FM GENIE BACKEND CONFIGURATION
+   ========================================================= */
 
 const API_BASE =
   "https://fm-genie-ffp75lvgda-el.a.run.app";
@@ -307,6 +1072,59 @@ const APP_NAME = "fm_genie";
 const USER_ID = "demo";
 
 let sessionId = null;
+
+
+/* =========================================================
+   DYNAMIC GREETING
+   ========================================================= */
+
+function updateGreeting() {
+
+  const hour = new Date().getHours();
+
+  let greeting = "Good Evening";
+
+  if (hour < 12) {
+    greeting = "Good Morning";
+  } else if (hour < 17) {
+    greeting = "Good Afternoon";
+  }
+
+  document.getElementById("greeting").textContent =
+    greeting + ", User 👋";
+
+  const date = new Date();
+
+  document.getElementById("currentDate").textContent =
+    date.toLocaleDateString(undefined, {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    });
+}
+
+updateGreeting();
+
+
+/* =========================================================
+   QUICK ACTIONS
+   ========================================================= */
+
+function setIssue(text) {
+
+  const textarea = document.getElementById("issue");
+
+  textarea.value = text;
+
+  textarea.focus();
+
+}
+
+
+/* =========================================================
+   CREATE SESSION
+   ========================================================= */
 
 async function createSession() {
 
@@ -322,37 +1140,91 @@ async function createSession() {
   );
 
   if (!response.ok) {
-    throw new Error("Unable to create FM Genie session.");
+    throw new Error(
+      "Unable to create FM Genie session."
+    );
   }
 
   const data = await response.json();
+
   sessionId = data.id;
 }
 
+
+/* =========================================================
+   SUBMIT ISSUE
+   ========================================================= */
+
 async function submitIssue() {
 
-  const issue = document.getElementById("issue").value.trim();
-  const button = document.getElementById("submitBtn");
-  const result = document.getElementById("result");
-  const error = document.getElementById("error");
+  const issue =
+    document.getElementById("issue").value.trim();
+
+  const button =
+    document.getElementById("submitBtn");
+
+  const result =
+    document.getElementById("result");
+
+  const error =
+    document.getElementById("error");
+
+  const processing =
+    document.getElementById("processing");
+
+  const processingText =
+    document.getElementById("processingText");
+
 
   if (!issue) {
-    error.textContent = "Please describe the issue first.";
+
+    error.textContent =
+      "Please describe the issue first.";
+
     error.style.display = "block";
+
     return;
   }
 
+
   error.style.display = "none";
+
   result.classList.remove("show");
 
   button.disabled = true;
-  button.textContent = "FM Genie is processing...";
+
+  button.textContent = "FM Genie is working...";
+
+  processing.classList.add("show");
+
+
+  const processingMessages = [
+    "FM Genie is understanding your request...",
+    "Identifying the issue category...",
+    "Determining priority and SLA...",
+    "Routing your request to the right team..."
+  ];
+
+  let messageIndex = 0;
+
+  const messageTimer = setInterval(() => {
+
+    messageIndex =
+      (messageIndex + 1) %
+      processingMessages.length;
+
+    processingText.textContent =
+      processingMessages[messageIndex];
+
+  }, 1000);
+
 
   try {
 
     if (!sessionId) {
       await createSession();
     }
+
 
     const response = await fetch(
       `${API_BASE}/run`,
@@ -362,98 +1234,152 @@ async function submitIssue() {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
+
           appName: APP_NAME,
+
           userId: USER_ID,
+
           sessionId: sessionId,
+
           newMessage: {
+
             role: "user",
+
             parts: [
               {
                 text: issue
               }
             ]
+
           }
+
         })
       }
     );
 
+
     if (!response.ok) {
-      throw new Error("FM Genie could not process the request.");
+
+      throw new Error(
+        "FM Genie could not process the request."
+      );
+
     }
 
-    const events = await response.json();
+
+    const events =
+      await response.json();
+
 
     displayResponse(events);
 
+
   } catch (err) {
 
-    error.textContent = err.message;
-    error.style.display = "block";
+    error.textContent =
+      err.message;
+
+    error.style.display =
+      "block";
+
 
   } finally {
 
+    clearInterval(messageTimer);
+
+    processing.classList.remove("show");
+
     button.disabled = false;
-    button.textContent = "Create Service Request";
+
+    button.textContent =
+      "➤ Send to FM Genie";
 
   }
+
 }
+
+
+/* =========================================================
+   DISPLAY AGENT RESPONSE
+   ========================================================= */
 
 function displayResponse(events) {
 
   let ticket = null;
 
+
   for (const event of events) {
 
-    const parts = event.content?.parts || [];
+    const parts =
+      event.content?.parts || [];
+
 
     for (const part of parts) {
 
       if (
         part.functionResponse &&
-        part.functionResponse.name === "create_ticket"
+        part.functionResponse.name ===
+          "create_ticket"
       ) {
-        ticket = part.functionResponse.response;
+
+        ticket =
+          part.functionResponse.response;
+
       }
 
     }
+
   }
+
 
   if (!ticket || !ticket.success) {
 
     document.getElementById("error").textContent =
       "The agent responded, but no ticket information was returned.";
 
-    document.getElementById("error").style.display = "block";
+    document.getElementById("error").style.display =
+      "block";
 
     return;
+
   }
+
 
   document.getElementById("ticketId").textContent =
     "Ticket " + ticket.ticket_id;
 
+
   document.getElementById("status").textContent =
     ticket.status || "-";
+
 
   document.getElementById("category").textContent =
     ticket.category || "-";
 
+
   document.getElementById("priority").textContent =
     ticket.priority || "-";
+
 
   document.getElementById("sla").textContent =
     ticket.sla || "-";
 
+
   document.getElementById("location").textContent =
     ticket.location || "-";
 
-  document.getElementById("team").textContent =
-    ticket.responsible_team || "Pending Assignment";
 
-  document.getElementById("result").classList.add("show");
+  document.getElementById("team").textContent =
+    ticket.responsible_team ||
+    "Pending Assignment";
+
+
+  document.getElementById("result")
+    .classList.add("show");
+
 }
 
 </script>
 
 </body>
 </html>
-EOF
